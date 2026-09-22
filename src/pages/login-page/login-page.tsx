@@ -1,4 +1,6 @@
-function LoginPage(): JSX.Element {
+import type { ReactElement } from 'react';
+
+function LoginPage(): ReactElement {
   return (
     <div className="page page--gray page--login">
       <header className="header">

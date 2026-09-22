@@ -1,4 +1,6 @@
-function OfferCard(): JSX.Element {
+import type { ReactElement } from 'react';
+
+function OfferCard(): ReactElement {
   return (
     <article className="cities__card place-card">
       <div className="place-card__mark">

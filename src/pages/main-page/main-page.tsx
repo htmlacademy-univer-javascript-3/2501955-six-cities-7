@@ -1,10 +1,11 @@
+import type { ReactElement } from 'react';
 import OfferCard from '../../components/offer-card/offer-card';
 
 type MainPageProps = {
   offersCount: number;
 };
 
-function MainPage({ offersCount }: MainPageProps): JSX.Element {
+function MainPage({ offersCount }: MainPageProps): ReactElement {
   return (
     <div className="page page--gray page--main">
       <header className="header">

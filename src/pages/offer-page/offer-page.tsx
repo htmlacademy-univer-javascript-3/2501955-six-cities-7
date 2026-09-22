@@ -1,4 +1,6 @@
-function OfferPage(): JSX.Element {
+import type { ReactElement } from 'react';
+
+function OfferPage(): ReactElement {
   return (
     <div className="page">
       <header className="header">

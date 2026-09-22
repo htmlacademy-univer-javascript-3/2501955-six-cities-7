@@ -1,4 +1,6 @@
-function FavoritesPage(): JSX.Element {
+import type { ReactElement } from 'react';
+
+function FavoritesPage(): ReactElement {
   return (
     <div className="page">
       <header className="header">
