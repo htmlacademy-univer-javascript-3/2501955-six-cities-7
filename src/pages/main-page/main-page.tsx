@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { Helmet } from 'react-helmet-async';
 import OfferCard from '../../components/offer-card/offer-card';
 
 type MainPageProps = {
@@ -8,6 +9,10 @@ type MainPageProps = {
 function MainPage({ offersCount }: MainPageProps): ReactElement {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 cities | Main</title>
+      </Helmet>
+
       <header className="header">
         <div className="container">
           <div className="header__wrapper">

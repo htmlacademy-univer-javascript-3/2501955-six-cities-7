@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-
-enum AppSettings {
-  OffersCount = 5
-}
+import { AppSettings } from './enums/app-settings';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
