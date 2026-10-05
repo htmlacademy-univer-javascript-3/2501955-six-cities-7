@@ -41,11 +41,11 @@ function App({ offersCount }: AppProps): ReactElement {
               path={AppRoute.Offer}
               element={<OfferPage />}
             />
-            <Route
-              path='*'
-              element={<NotFoundPage />}
-            />
           </Route>
+          <Route
+            path='*'
+            element={<NotFoundPage />}
+          />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
