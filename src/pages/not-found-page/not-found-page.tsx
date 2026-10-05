@@ -5,7 +5,7 @@ import { AppRoute } from '../../enums/app-route';
 
 function NotFoundPage(): ReactElement {
   return (
-    <>
+    <div className='page page--gray'>
       <Helmet>
         <title>6 cities | Not found</title>
       </Helmet>
@@ -18,7 +18,7 @@ function NotFoundPage(): ReactElement {
           </section>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
