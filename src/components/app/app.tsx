@@ -8,7 +8,7 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import PrivateRoute from '../private-route/private-route';
+import ProtectedRoute from '../protected-route/protected-route';
 import Header from '../header/header';
 
 type AppProps = {
@@ -27,14 +27,24 @@ function App({ offersCount }: AppProps): ReactElement {
             />
             <Route
               path={AppRoute.Login}
-              element={<LoginPage />}
+              element={
+                <ProtectedRoute
+                  restrictedFor={AuthorizationStatus.Auth}
+                  redirectTo={AppRoute.Root}
+                >
+                  <LoginPage />
+                </ProtectedRoute>
+              }
             />
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+                <ProtectedRoute
+                  restrictedFor={AuthorizationStatus.NoAuth}
+                  redirectTo={AppRoute.Login}
+                >
                   <FavoritesPage />
-                </PrivateRoute>
+                </ProtectedRoute>
               }
             />
             <Route
