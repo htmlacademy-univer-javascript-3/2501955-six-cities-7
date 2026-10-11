@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode } from 'react';
+import type { PropsWithChildren, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../enums/authorization-status';
 import { AppRoute } from '../../enums/app-route';
