@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
 import { AuthorizationStatus } from '../../enums/authorization-status';
+import Logo from '../logo/logo';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;
@@ -10,10 +11,11 @@ type HeaderProps = {
 function Header({ authorizationStatus }: HeaderProps): ReactElement {
   const { pathname } = useLocation() as { pathname: AppRoute };
   const isLoginPage: boolean = pathname === AppRoute.Login;
+  const isMainPage: boolean = pathname === AppRoute.Root;
   const isAuthorized: boolean = authorizationStatus === AuthorizationStatus.Auth;
 
   let rootClassName: string = '';
-  if (pathname === AppRoute.Root) {
+  if (isMainPage) {
     rootClassName = 'page--gray page--main';
   } else if (isLoginPage) {
     rootClassName = 'page--gray page--login';
@@ -25,18 +27,7 @@ function Header({ authorizationStatus }: HeaderProps): ReactElement {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link
-                className="header__logo-link header__logo-link--active"
-                to={AppRoute.Root}
-              >
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width="81"
-                  height="41"
-                />
-              </Link>
+              <Logo isMainPage={isMainPage} isHeader />
             </div>
             {!isLoginPage && (
               <nav className="header__nav">
