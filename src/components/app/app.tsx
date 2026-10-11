@@ -38,7 +38,7 @@ function App({ offersCount }: AppProps): ReactElement {
               }
             />
             <Route
-              path={AppRoute.Offer}
+              path={`${AppRoute.Offer}/:id`}
               element={<OfferPage />}
             />
           </Route>
