@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
 import { AuthorizationStatus } from '../../enums/authorization-status';
+import type { OfferPreview } from '../../types/offer-preview';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
@@ -12,10 +13,10 @@ import ProtectedRoute from '../protected-route/protected-route';
 import RootLayout from '../root-layout/root-layout';
 
 type AppProps = {
-  offersCount: number;
+  offers: OfferPreview[];
 };
 
-function App({ offersCount }: AppProps): ReactElement {
+function App({ offers }: AppProps): ReactElement {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,7 +24,7 @@ function App({ offersCount }: AppProps): ReactElement {
           <Route element={<RootLayout authorizationStatus={AuthorizationStatus.NoAuth} />}>
             <Route
               path={AppRoute.Root}
-              element={<MainPage offersCount={offersCount} />}
+              element={<MainPage offers={offers} />}
             />
             <Route
               path={AppRoute.Login}

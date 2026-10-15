@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
-import { AppSettings } from './enums/app-settings';
+import { OFFER_PREVIEWS } from './mocks/offer-previews';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,6 +9,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offersCount={AppSettings.OffersCount} />
+    <App offers={OFFER_PREVIEWS} />
   </React.StrictMode>
 );
