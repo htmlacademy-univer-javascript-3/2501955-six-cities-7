@@ -23,7 +23,7 @@ export const OFFER_PREVIEWS: OfferPreview[] = [
     isFavorite: false,
     isPremium: true,
     rating: 4,
-    previewImage: 'apartment-01.jpg',
+    previewImage: 'img/apartment-01.jpg',
   },
   {
     id: '2',
@@ -43,10 +43,10 @@ export const OFFER_PREVIEWS: OfferPreview[] = [
       longitude: 4.673877537499948,
       zoom: 8,
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4,
-    previewImage: 'apartment-03.jpg',
+    previewImage: 'img/apartment-03.jpg',
   },
   {
     id: '3',
@@ -69,7 +69,7 @@ export const OFFER_PREVIEWS: OfferPreview[] = [
     isFavorite: false,
     isPremium: false,
     rating: 4,
-    previewImage: 'apartment-02.jpg',
+    previewImage: 'img/apartment-02.jpg',
   },
   {
     id: '4',
@@ -92,6 +92,6 @@ export const OFFER_PREVIEWS: OfferPreview[] = [
     isFavorite: false,
     isPremium: true,
     rating: 5,
-    previewImage: 'apartment-03.jpg',
+    previewImage: 'img/apartment-03.jpg',
   },
 ];

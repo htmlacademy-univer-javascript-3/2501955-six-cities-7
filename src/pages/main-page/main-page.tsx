@@ -79,7 +79,10 @@ function MainPage({ offers }: MainPageProps): ReactElement {
                 </form>
                 <div className="cities__places-list places__list tabs__content">
                   {activeTabOffers.map((offer) => (
-                    <OfferCard key={offer.id} />
+                    <OfferCard
+                      key={offer.id}
+                      {...offer}
+                    />
                   ))}
                 </div>
               </section>
