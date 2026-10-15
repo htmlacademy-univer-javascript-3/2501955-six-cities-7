@@ -9,7 +9,7 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import ProtectedRoute from '../protected-route/protected-route';
-import Header from '../header/header';
+import RootLayout from '../root-layout/root-layout';
 
 type AppProps = {
   offersCount: number;
@@ -20,7 +20,7 @@ function App({ offersCount }: AppProps): ReactElement {
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<Header authorizationStatus={AuthorizationStatus.NoAuth} />}>
+          <Route element={<RootLayout authorizationStatus={AuthorizationStatus.NoAuth} />}>
             <Route
               path={AppRoute.Root}
               element={<MainPage offersCount={offersCount} />}

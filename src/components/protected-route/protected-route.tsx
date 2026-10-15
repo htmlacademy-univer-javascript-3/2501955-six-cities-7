@@ -1,12 +1,13 @@
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../enums/authorization-status';
 import { AppRoute } from '../../enums/app-route';
 
-type ProtectedRouteProps = PropsWithChildren<{
+type ProtectedRouteProps = {
   restrictedFor: AuthorizationStatus;
   redirectTo: AppRoute;
-}>;
+  children: ReactNode;
+};
 
 function ProtectedRoute({
   restrictedFor,

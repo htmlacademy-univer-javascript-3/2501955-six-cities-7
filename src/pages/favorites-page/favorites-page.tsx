@@ -139,7 +139,7 @@ function FavoritesPage(): ReactElement {
         </div>
       </main>
       <footer className="footer container">
-        <Logo />
+        <Logo isHeader={false} />
       </footer>
     </>
   );
