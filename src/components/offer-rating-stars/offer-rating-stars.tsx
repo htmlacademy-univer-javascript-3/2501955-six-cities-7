@@ -2,7 +2,7 @@ import type { ReactElement } from 'react';
 
 type OfferRatingStarsProps = {
   rating: number;
-  variant?: 'offer' | 'card';
+  variant?: 'offer' | 'card' | 'reviews';
 };
 
 type OfferRatingStarsVariant = {
@@ -15,6 +15,9 @@ const OFFER_RATING_STARS_VARIANTS = {
   },
   card: {
     className: 'place-card__stars',
+  },
+  reviews: {
+    className: 'reviews__stars'
   },
 } as const satisfies Record<NonNullable<OfferRatingStarsProps['variant']>, OfferRatingStarsVariant>;
 

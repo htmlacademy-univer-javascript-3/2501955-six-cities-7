@@ -37,10 +37,9 @@ function MainPageOffersList({ authorizationStatus, offers, offersCityName, onOff
   });
 
   const selectSortState = (sortState: SortState): void => {
-    if (sortState === activeSortState) {
-      return;
+    if (sortState !== activeSortState) {
+      setActiveSortState(sortState);
     }
-    setActiveSortState(sortState);
     setIsSortDropdownOpen(false);
   };
 
