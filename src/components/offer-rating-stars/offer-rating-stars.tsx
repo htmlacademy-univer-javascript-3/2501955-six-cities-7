@@ -2,14 +2,14 @@ import type { ReactElement } from 'react';
 
 type OfferRatingStarsProps = {
   rating: number;
-  variant?: 'offer' | 'card' | 'reviews';
+  layoutVariant?: 'offer' | 'card' | 'reviews';
 };
 
-type OfferRatingStarsVariant = {
+type StarsLayoutVariant = {
   className: string;
 };
 
-const OFFER_RATING_STARS_VARIANTS = {
+const STARS_LAYOUT_VARIANTS = {
   offer: {
     className: 'offer__stars',
   },
@@ -17,15 +17,21 @@ const OFFER_RATING_STARS_VARIANTS = {
     className: 'place-card__stars',
   },
   reviews: {
-    className: 'reviews__stars'
+    className: 'reviews__stars',
   },
-} as const satisfies Record<NonNullable<OfferRatingStarsProps['variant']>, OfferRatingStarsVariant>;
+} as const satisfies Record<
+  NonNullable<OfferRatingStarsProps['layoutVariant']>,
+  StarsLayoutVariant
+>;
 
-function OfferRatingStars({ rating, variant = 'card' }: OfferRatingStarsProps): ReactElement {
-  const layoutVariant: OfferRatingStarsVariant = OFFER_RATING_STARS_VARIANTS[variant];
+function OfferRatingStars({
+  rating,
+  layoutVariant = 'card',
+}: OfferRatingStarsProps): ReactElement {
+  const starsLayoutVariant: StarsLayoutVariant = STARS_LAYOUT_VARIANTS[layoutVariant];
 
   return (
-    <div className={`rating__stars ${layoutVariant.className}`}>
+    <div className={`rating__stars ${starsLayoutVariant.className}`}>
       <span style={{ width: `${Math.round(rating) * 20}%` }} />
       <span className="visually-hidden">Rating</span>
     </div>

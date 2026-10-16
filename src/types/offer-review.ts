@@ -1,4 +1,4 @@
-import { OfferAuthor } from './offer-author';
+import type { OfferAuthor } from './offer-author';
 
 export type OfferReview = {
   id: string;

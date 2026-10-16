@@ -11,7 +11,10 @@ type RootLayoutProps = {
   favoritesCount: number;
 };
 
-function RootLayout({ authorizationStatus, favoritesCount }: RootLayoutProps): ReactElement {
+function RootLayout({
+  authorizationStatus,
+  favoritesCount,
+}: RootLayoutProps): ReactElement {
   const { pathname } = useLocation();
   const route: AppRoute | null = isAppRoute(pathname) ? pathname : null;
 
@@ -24,7 +27,7 @@ function RootLayout({ authorizationStatus, favoritesCount }: RootLayoutProps): R
       className={classNames('page', {
         'page--gray page--main': isMainPage,
         'page--gray page--login': isLoginPage,
-        'page--favorites-empty': isFavoritesPage && !favoritesCount
+        'page--favorites-empty': isFavoritesPage && !favoritesCount,
       })}
     >
       <Header

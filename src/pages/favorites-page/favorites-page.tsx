@@ -9,14 +9,17 @@ import type { OfferPreview } from '../../types/offer-preview';
 import Logo from '../../components/logo/logo';
 import OfferCard from '../../components/offer-card/offer-card';
 
+type OffersByCity = Partial<Record<CityName, OfferPreview[]>>;
+
 type FavoritesPageProps = {
   authorizationStatus: AuthorizationStatus;
   offers: OfferPreview[];
 };
 
-type OffersByCity = Partial<Record<CityName, OfferPreview[]>>;
-
-function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): ReactElement {
+function FavoritesPage({
+  authorizationStatus,
+  offers,
+}: FavoritesPageProps): ReactElement {
   const isEmpty: boolean = !offers.length;
   const offersByCity: OffersByCity = offers.reduce<OffersByCity>(
     (result, offer) => {
@@ -29,7 +32,7 @@ function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): Rea
 
       return result;
     },
-    {}
+    {},
   );
 
   const emptyStateLayout: ReactElement = (
@@ -66,7 +69,10 @@ function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): Rea
                   <li className="favorites__locations-items" key={cityName}>
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
-                        <Link className="locations__item-link" to={AppRoute.Root}>
+                        <Link
+                          className="locations__item-link"
+                          to={AppRoute.Root}
+                        >
                           <span>{cityName}</span>
                         </Link>
                       </div>
@@ -76,8 +82,8 @@ function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): Rea
                         <OfferCard
                           key={offer.id}
                           authorizationStatus={authorizationStatus}
-                          {...offer}
-                          variant='favorites'
+                          offer={offer}
+                          layoutVariant='favorites'
                         />
                       ))}
                     </div>
@@ -88,7 +94,7 @@ function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): Rea
           )}
         </div>
       </main>
-      <footer className={classNames('footer', { 'container': !isEmpty })}>
+      <footer className={classNames('footer', { container: !isEmpty })}>
         <Logo withLink isFooterLogo />
       </footer>
     </>

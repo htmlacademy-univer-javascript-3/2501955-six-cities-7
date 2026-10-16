@@ -7,14 +7,15 @@ import { getOfferHousingTypeText } from '../../utils/get-offer-housing-type-text
 import OfferRatingStars from '../offer-rating-stars/offer-rating-stars';
 import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-button';
 
-type OfferCardProps = Omit<OfferPreview, 'city' | 'location'> & {
+type OfferCardProps = {
   authorizationStatus: AuthorizationStatus;
-  variant?: 'cities' | 'favorites' | 'near-places';
+  offer: Omit<OfferPreview, 'city' | 'location'>;
+  layoutVariant?: 'cities' | 'favorites' | 'near-places';
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 };
 
-type OfferCardVariant = {
+type CardLayoutVariant = {
   articleClassName: string;
   imageWrapperClassName: string;
   infoClassName: string;
@@ -22,45 +23,51 @@ type OfferCardVariant = {
   imageHeight: number;
 };
 
-const OFFER_CARD_VARIANTS = {
+const CARD_LAYOUT_VARIANTS = {
   cities: {
     articleClassName: 'cities__card',
     imageWrapperClassName: 'cities__image-wrapper',
     infoClassName: '',
     imageWidth: 260,
-    imageHeight: 200
+    imageHeight: 200,
   },
   favorites: {
     articleClassName: 'favorites__card',
     imageWrapperClassName: 'favorites__image-wrapper',
     infoClassName: 'favorites__card-info',
     imageWidth: 150,
-    imageHeight: 110
+    imageHeight: 110,
   },
   'near-places': {
     articleClassName: 'near-places__card',
     imageWrapperClassName: 'near-places__image-wrapper',
     infoClassName: '',
     imageWidth: 260,
-    imageHeight: 200
-  }
-} as const satisfies Record<NonNullable<OfferCardProps['variant']>, OfferCardVariant>;
+    imageHeight: 200,
+  },
+} as const satisfies Record<
+  NonNullable<OfferCardProps['layoutVariant']>,
+  CardLayoutVariant
+>;
 
 function OfferCard({
-  id,
-  title,
-  housingType,
-  price,
-  isFavorite,
-  isPremium,
-  rating,
-  previewImage,
   authorizationStatus,
-  variant = 'cities',
+  offer,
+  layoutVariant = 'cities',
   onMouseEnter,
-  onMouseLeave
+  onMouseLeave,
 }: OfferCardProps): ReactElement {
-  const cardLayoutVariant: OfferCardVariant = OFFER_CARD_VARIANTS[variant];
+  const cardLayoutVariant: CardLayoutVariant = CARD_LAYOUT_VARIANTS[layoutVariant];
+  const {
+    isPremium,
+    id,
+    previewImage,
+    price,
+    isFavorite,
+    rating,
+    title,
+    housingType,
+  } = offer;
 
   return (
     <article
@@ -73,7 +80,9 @@ function OfferCard({
           <span>Premium</span>
         </div>
       )}
-      <div className={`place-card__image-wrapper ${cardLayoutVariant.imageWrapperClassName}`}>
+      <div
+        className={`place-card__image-wrapper ${cardLayoutVariant.imageWrapperClassName}`}
+      >
         <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
@@ -90,7 +99,10 @@ function OfferCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <OfferBookmarksButton authorizationStatus={authorizationStatus} isActive={isFavorite} />
+          <OfferBookmarksButton
+            authorizationStatus={authorizationStatus}
+            isActive={isFavorite}
+          />
         </div>
         <div className="place-card__rating rating">
           <OfferRatingStars rating={rating} />
@@ -98,7 +110,9 @@ function OfferCard({
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{getOfferHousingTypeText(housingType)}</p>
+        <p className="place-card__type">
+          {getOfferHousingTypeText(housingType)}
+        </p>
       </div>
     </article>
   );

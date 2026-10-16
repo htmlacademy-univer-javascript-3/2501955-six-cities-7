@@ -10,7 +10,7 @@ type OfferBookmarksButtonProps = {
   isFullSize?: boolean;
 };
 
-type OfferBookmarksButtonVariant = {
+type ButtoLayoutVariant = {
   className: string;
   iconWidth: number;
   iconHeight: number;
@@ -18,7 +18,7 @@ type OfferBookmarksButtonVariant = {
   iconClassName: string;
 };
 
-const OFFER_BOOKMARKS_BUTTON_VARIANTS = {
+const BUTTON_LAYOUT_VARIANTS = {
   card: {
     className: 'place-card__bookmark-button',
     iconWidth: 18,
@@ -33,7 +33,7 @@ const OFFER_BOOKMARKS_BUTTON_VARIANTS = {
     activeClassName: 'offer__bookmark-button--active',
     iconClassName: 'offer__bookmark-icon',
   },
-} as const satisfies Record<'card' | 'offer', OfferBookmarksButtonVariant>;
+} as const satisfies Record<'card' | 'offer', ButtoLayoutVariant>;
 
 function OfferBookmarksButton({
   authorizationStatus,
@@ -41,7 +41,7 @@ function OfferBookmarksButton({
   isFullSize = false,
 }: OfferBookmarksButtonProps): ReactElement {
   const [isInBookmarks, setIsInBookmarks] = useState(isActive);
-  const variant: OfferBookmarksButtonVariant = OFFER_BOOKMARKS_BUTTON_VARIANTS[isFullSize ? 'offer' : 'card'];
+  const layoutVariant: ButtoLayoutVariant = BUTTON_LAYOUT_VARIANTS[isFullSize ? 'offer' : 'card'];
   const isAuthorized: boolean = authorizationStatus === AuthorizationStatus.Auth;
   const navigate = useNavigate();
   const toggleInBookmarksState = (): void => {
@@ -56,16 +56,16 @@ function OfferBookmarksButton({
 
   return (
     <button
-      className={classNames(variant.className, 'button', {
-        [variant.activeClassName]: isInBookmarks,
+      className={classNames(layoutVariant.className, 'button', {
+        [layoutVariant.activeClassName]: isInBookmarks,
       })}
       type="button"
       onClick={toggleInBookmarksState}
     >
       <svg
-        className={variant.iconClassName}
-        width={variant.iconWidth}
-        height={variant.iconHeight}
+        className={layoutVariant.iconClassName}
+        width={layoutVariant.iconWidth}
+        height={layoutVariant.iconHeight}
       >
         <use xlinkHref="#icon-bookmark" />
       </svg>

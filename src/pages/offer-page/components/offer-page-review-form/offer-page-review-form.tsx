@@ -132,7 +132,7 @@ function OfferPageReviewForm(): ReactElement {
         </button>
       </div>
 
-      {submitError && <p role='alert'>{submitError}</p>}
+      {submitError && <p role="alert">{submitError}</p>}
     </form>
   );
 }

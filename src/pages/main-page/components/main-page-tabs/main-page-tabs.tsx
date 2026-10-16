@@ -8,7 +8,10 @@ type MainPageTabsProps = {
   onTabChange: (tab: CityName) => void;
 };
 
-function MainPageTabs({ activeTab, onTabChange }: MainPageTabsProps): ReactElement {
+function MainPageTabs({
+  activeTab,
+  onTabChange,
+}: MainPageTabsProps): ReactElement {
   return (
     <div className="tabs">
       <section className="locations container">
@@ -17,15 +20,14 @@ function MainPageTabs({ activeTab, onTabChange }: MainPageTabsProps): ReactEleme
             <li className="locations__item" key={tab}>
               <a
                 className={classNames('locations__item-link', 'tabs__item', {
-                  'tabs__item--active': tab === activeTab
+                  'tabs__item--active': tab === activeTab,
                 })}
-                href='#'
+                href="#"
                 onClick={(event) => {
                   event.preventDefault();
-                  if (tab === activeTab) {
-                    return;
+                  if (tab !== activeTab) {
+                    onTabChange(tab);
                   }
-                  onTabChange(tab);
                 }}
               >
                 <span>{tab}</span>

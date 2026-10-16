@@ -34,7 +34,12 @@ function App({ offers }: AppProps): ReactElement {
           >
             <Route
               path={AppRoute.Root}
-              element={<MainPage authorizationStatus={currentAuthorizationStatus} offers={offers} />}
+              element={
+                <MainPage
+                  authorizationStatus={currentAuthorizationStatus}
+                  offers={offers}
+                />
+              }
             />
             <Route
               path={AppRoute.Login}
@@ -54,19 +59,21 @@ function App({ offers }: AppProps): ReactElement {
                   restrictedFor={AuthorizationStatus.NoAuth}
                   redirectTo={AppRoute.Login}
                 >
-                  <FavoritesPage authorizationStatus={currentAuthorizationStatus} offers={favoriteOffers} />
+                  <FavoritesPage
+                    authorizationStatus={currentAuthorizationStatus}
+                    offers={favoriteOffers}
+                  />
                 </ProtectedRoute>
               }
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<OfferPage authorizationStatus={currentAuthorizationStatus} />}
+              element={
+                <OfferPage authorizationStatus={currentAuthorizationStatus} />
+              }
             />
           </Route>
-          <Route
-            path='*'
-            element={<NotFoundPage />}
-          />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

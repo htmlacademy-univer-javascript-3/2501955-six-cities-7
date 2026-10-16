@@ -29,7 +29,7 @@ function OfferPageReview({ review }: OfferPageReviewProps): ReactElement {
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
-          <OfferRatingStars rating={review.rating} variant="reviews" />
+          <OfferRatingStars rating={review.rating} layoutVariant='reviews' />
         </div>
         <p className="reviews__text">{review.comment}</p>
         <time className="reviews__time" dateTime={review.date}>

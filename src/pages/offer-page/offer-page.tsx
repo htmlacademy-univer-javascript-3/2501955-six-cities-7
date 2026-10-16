@@ -19,7 +19,7 @@ import OfferPageReview from './components/offer-page-review/offer-page-review';
 
 type OfferPageProps = {
   authorizationStatus: AuthorizationStatus;
-}
+};
 
 function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
   const { id } = useParams();
@@ -46,7 +46,11 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
             <div className="offer__gallery">
               {offer.images.map((image) => (
                 <div className="offer__image-wrapper" key={image}>
-                  <img className="offer__image" src={image} alt="Photo studio" />
+                  <img
+                    className="offer__image"
+                    src={image}
+                    alt="Photo studio"
+                  />
                 </div>
               ))}
             </div>
@@ -59,9 +63,7 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">
-                  { offer.title }
-                </h1>
+                <h1 className="offer__name">{offer.title}</h1>
                 <OfferBookmarksButton
                   authorizationStatus={authorizationStatus}
                   isActive={offer.isFavorite}
@@ -69,8 +71,10 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
                 />
               </div>
               <div className="offer__rating rating">
-                <OfferRatingStars rating={offer.rating} variant='offer' />
-                <span className="offer__rating-value rating__value">{offer.rating}</span>
+                <OfferRatingStars rating={offer.rating} layoutVariant='offer' />
+                <span className="offer__rating-value rating__value">
+                  {offer.rating}
+                </span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
@@ -105,33 +109,34 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
                       'offer__avatar-wrapper--pro': offer.author.isPro
                     })}
                   >
-                    <img className="offer__avatar user__avatar" src={offer.author.avatar} width="74" height="74" alt="Host avatar" />
+                    <img
+                      className="offer__avatar user__avatar"
+                      src={offer.author.avatar}
+                      width="74"
+                      height="74"
+                      alt="Host avatar"
+                    />
                   </div>
-                  <span className="offer__user-name">
-                    {offer.author.name}
-                  </span>
+                  <span className="offer__user-name">{offer.author.name}</span>
                   {offer.author.isPro && (
-                    <span className="offer__user-status">
-                      Pro
-                    </span>
+                    <span className="offer__user-status">Pro</span>
                   )}
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">
-                    { offer.description }
-                  </p>
+                  <p className="offer__text">{offer.description}</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                <h2 className="reviews__title">
+                  Reviews &middot;{' '}
+                  <span className="reviews__amount">{reviews.length}</span>
+                </h2>
                 <ul className="reviews__list">
                   {reviews.map((review) => (
                     <OfferPageReview key={review.id} review={review} />
                   ))}
                 </ul>
-                {isAuthorized && (
-                  <OfferPageReviewForm />
-                )}
+                {isAuthorized && <OfferPageReviewForm />}
               </section>
             </div>
           </div>
@@ -139,14 +144,16 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
         </section>
         <div className="container">
           <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
+            <h2 className="near-places__title">
+              Other places in the neighbourhood
+            </h2>
             <div className="near-places__list places__list">
               {nearOffers.map((nearOffer) => (
                 <OfferCard
                   key={nearOffer.id}
-                  {...nearOffer}
+                  offer={nearOffer}
                   authorizationStatus={authorizationStatus}
-                  variant='near-places'
+                  layoutVariant='near-places'
                 />
               ))}
             </div>

@@ -16,10 +16,15 @@ enum SortState {
   Popular = 'Popular',
   PriceLowToHigh = 'Price: low to high',
   PriceHighToLow = 'Price: high to low',
-  TopRatedFirst = 'Top rated first'
+  TopRatedFirst = 'Top rated first',
 }
 
-function MainPageOffersList({ authorizationStatus, offers, offersCityName, onOfferHover }: MainPageOffersListProps): ReactElement {
+function MainPageOffersList({
+  authorizationStatus,
+  offers,
+  offersCityName,
+  onOfferHover,
+}: MainPageOffersListProps): ReactElement {
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [activeSortState, setActiveSortState] = useState(SortState.Popular);
 
@@ -46,13 +51,13 @@ function MainPageOffersList({ authorizationStatus, offers, offersCityName, onOff
   const sortStateDropdown: ReactElement = (
     <ul
       className={classNames('places__options', 'places__options--custom', {
-        'places__options--opened': isSortDropdownOpen
+        'places__options--opened': isSortDropdownOpen,
       })}
     >
       {Object.values(SortState).map((sortState) => (
         <li
           className={classNames('places__option', {
-            'places__option--active': sortState === activeSortState
+            'places__option--active': sortState === activeSortState,
           })}
           key={sortState}
           tabIndex={0}
@@ -89,7 +94,7 @@ function MainPageOffersList({ authorizationStatus, offers, offersCityName, onOff
           <OfferCard
             authorizationStatus={authorizationStatus}
             key={offer.id}
-            {...offer}
+            offer={offer}
             onMouseEnter={() => onOfferHover(offer.id)}
             onMouseLeave={() => onOfferHover(null)}
           />
