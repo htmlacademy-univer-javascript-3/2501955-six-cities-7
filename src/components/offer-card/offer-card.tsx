@@ -23,7 +23,7 @@ function OfferCard({
   rating,
   previewImage
 }: OfferCardProps): ReactElement {
-  const [inBookmarks, setInBookmarks] = useState(isFavorite);
+  const [isInBookmarks, setIsInBookmarks] = useState(isFavorite);
 
   return (
     <article className="cities__card place-card">
@@ -51,16 +51,16 @@ function OfferCard({
           </div>
           <button
             className={classNames('place-card__bookmark-button', 'button', {
-              'place-card__bookmark-button--active': inBookmarks
+              'place-card__bookmark-button--active': isInBookmarks
             })}
             type="button"
-            onClick={() => setInBookmarks((prevInBookmarks) => !prevInBookmarks)}
+            onClick={() => setIsInBookmarks((prevInBookmarks) => !prevInBookmarks)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark" />
             </svg>
             <span className="visually-hidden">
-              {inBookmarks ? 'In bookmarks' : 'To bookmarks'}
+              {isInBookmarks ? 'In bookmarks' : 'To bookmarks'}
             </span>
           </button>
         </div>
