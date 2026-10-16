@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import type { ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../enums/app-route';
 import type { AuthorizationStatus } from '../../enums/authorization-status';
 import type { CityName } from '../../enums/city-name';
 import type { OfferPreview } from '../../types/offer-preview';
@@ -64,9 +66,9 @@ function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): Rea
                   <li className="favorites__locations-items" key={cityName}>
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
-                        <a className="locations__item-link" href="#">
+                        <Link className="locations__item-link" to={AppRoute.Root}>
                           <span>{cityName}</span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                     <div className="favorites__places">

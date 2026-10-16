@@ -9,7 +9,7 @@ import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-butt
 
 type OfferCardProps = Omit<OfferPreview, 'city' | 'location'> & {
   authorizationStatus: AuthorizationStatus;
-  variant?: 'cities' | 'favorites';
+  variant?: 'cities' | 'favorites' | 'near-places';
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 };
@@ -36,6 +36,13 @@ const OFFER_CARD_VARIANTS = {
     infoClassName: 'favorites__card-info',
     imageWidth: 150,
     imageHeight: 110
+  },
+  'near-places': {
+    articleClassName: 'near-places__card',
+    imageWrapperClassName: 'near-places__image-wrapper',
+    infoClassName: '',
+    imageWidth: 260,
+    imageHeight: 200
   }
 } as const satisfies Record<NonNullable<OfferCardProps['variant']>, OfferCardVariant>;
 
