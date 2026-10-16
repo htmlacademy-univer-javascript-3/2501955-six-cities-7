@@ -3,6 +3,7 @@ import { type ReactElement, useState } from 'react';
 import type { AuthorizationStatus } from '../../../../enums/authorization-status';
 import type { CityName } from '../../../../enums/city-name';
 import type { OfferPreview } from '../../../../types/offer-preview';
+import { addPluralEnding } from '../../../../utils/add-plural-ending';
 import OfferCard from '../../../../components/offer-card/offer-card';
 
 type MainPageOffersListProps = {
@@ -73,7 +74,7 @@ function MainPageOffersList({
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
-        {`${offers.length} ${offers.length === 1 ? 'place' : 'places'} to stay in ${offersCityName}`}
+        {`${offers.length} place${addPluralEnding(offers.length)} to stay in ${offersCityName}`}
       </b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>

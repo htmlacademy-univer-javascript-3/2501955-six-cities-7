@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
 import type { AuthorizationStatus } from '../../enums/authorization-status';
 import type { OfferPreview } from '../../types/offer-preview';
-import { getOfferHousingTypeText } from '../../utils/get-offer-housing-type-text';
+import { capitalize } from '../../utils/capitalize';
 import OfferRatingStars from '../offer-rating-stars/offer-rating-stars';
 import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-button';
 
@@ -111,7 +111,7 @@ function OfferCard({
           <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">
-          {getOfferHousingTypeText(housingType)}
+          {capitalize(housingType)}
         </p>
       </div>
     </article>

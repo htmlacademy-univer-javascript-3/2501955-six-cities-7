@@ -10,7 +10,8 @@ import { AuthorizationStatus } from '../../enums/authorization-status';
 import type { Offer } from '../../types/offer';
 import type { OfferPreview } from '../../types/offer-preview';
 import type { OfferReview } from '../../types/offer-review';
-import { getOfferHousingTypeText } from '../../utils/get-offer-housing-type-text';
+import { addPluralEnding } from '../../utils/add-plural-ending';
+import { capitalize } from '../../utils/capitalize';
 import OfferBookmarksButton from '../../components/offer-bookmarks-button/offer-bookmarks-button';
 import OfferRatingStars from '../../components/offer-rating-stars/offer-rating-stars';
 import OfferCard from '../../components/offer-card/offer-card';
@@ -78,13 +79,13 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {getOfferHousingTypeText(offer.housingType)}
+                  {capitalize(offer.housingType)}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {`${offer.bedroomsCount} ${offer.bedroomsCount === 1 ? 'Bedroom' : 'Bedrooms'}`}
+                  {`${offer.bedroomsCount} Bedroom${addPluralEnding(offer.bedroomsCount)}`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  {`Max ${offer.guestsMaxCount} ${offer.guestsMaxCount === 1 ? 'adult' : 'adults'}`}
+                  {`Max ${offer.guestsMaxCount} adult${addPluralEnding(offer.guestsMaxCount)}`}
                 </li>
               </ul>
               <div className="offer__price">
