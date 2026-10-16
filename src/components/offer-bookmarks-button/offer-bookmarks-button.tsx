@@ -10,7 +10,7 @@ type OfferBookmarksButtonProps = {
   isFullSize?: boolean;
 };
 
-type ButtoLayoutVariant = {
+type ButtonLayoutVariant = {
   className: string;
   iconWidth: number;
   iconHeight: number;
@@ -33,7 +33,7 @@ const BUTTON_LAYOUT_VARIANTS = {
     activeClassName: 'offer__bookmark-button--active',
     iconClassName: 'offer__bookmark-icon',
   },
-} as const satisfies Record<'card' | 'offer', ButtoLayoutVariant>;
+} as const satisfies Record<'card' | 'offer', ButtonLayoutVariant>;
 
 function OfferBookmarksButton({
   authorizationStatus,
@@ -41,7 +41,7 @@ function OfferBookmarksButton({
   isFullSize = false,
 }: OfferBookmarksButtonProps): ReactElement {
   const [isInBookmarks, setIsInBookmarks] = useState(isActive);
-  const layoutVariant: ButtoLayoutVariant = BUTTON_LAYOUT_VARIANTS[isFullSize ? 'offer' : 'card'];
+  const layoutVariant: ButtonLayoutVariant = BUTTON_LAYOUT_VARIANTS[isFullSize ? 'offer' : 'card'];
   const isAuthorized: boolean = authorizationStatus === AuthorizationStatus.Auth;
   const navigate = useNavigate();
   const toggleInBookmarksState = (): void => {
