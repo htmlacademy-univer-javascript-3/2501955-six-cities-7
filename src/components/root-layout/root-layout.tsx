@@ -8,20 +8,23 @@ import Header from './components/header/header';
 
 type RootLayoutProps = {
   authorizationStatus: AuthorizationStatus;
+  favoritesCount: number;
 };
 
-function RootLayout({ authorizationStatus }: RootLayoutProps): ReactElement {
+function RootLayout({ authorizationStatus, favoritesCount }: RootLayoutProps): ReactElement {
   const { pathname } = useLocation();
   const route: AppRoute | null = isAppRoute(pathname) ? pathname : null;
 
   const isMainPage: boolean = route === AppRoute.Root;
   const isLoginPage: boolean = route === AppRoute.Login;
+  const isFavoritesPage: boolean = route === AppRoute.Favorites;
 
   return (
     <div
       className={classNames('page', {
         'page--gray page--main': isMainPage,
         'page--gray page--login': isLoginPage,
+        'page--favorites-empty': isFavoritesPage && !favoritesCount
       })}
     >
       <Header

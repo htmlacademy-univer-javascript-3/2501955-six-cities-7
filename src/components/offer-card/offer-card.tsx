@@ -1,17 +1,39 @@
-import classNames from 'classnames';
-import { type ReactElement, useState } from 'react';
+import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
 import type { OfferPreview } from '../../types/offer-preview';
+import { getOfferHousingTypeText } from '../../utils/get-offer-housing-type-text';
+import OfferRatingStars from '../offer-rating-stars/offer-rating-stars';
+import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-button';
 
-type OfferCardProps = Omit<OfferPreview, 'city' | 'location'>;
-
-const HOUSING_TYPE_TEXT: Record<OfferPreview['housingType'], string> = {
-  apartment: 'Apartment',
-  hotel: 'Hotel',
-  house: 'House',
-  room: 'Room'
+type OfferCardProps = Omit<OfferPreview, 'city' | 'location'> & {
+  variant?: 'cities' | 'favorites';
 };
+
+type OfferCardVariant = {
+  articleClassName: string;
+  imageWrapperClassName: string;
+  infoClassName: string;
+  imageWidth: number;
+  imageHeight: number;
+};
+
+const OFFER_CARD_VARIANTS = {
+  cities: {
+    articleClassName: 'cities__card',
+    imageWrapperClassName: 'cities__image-wrapper',
+    infoClassName: '',
+    imageWidth: 260,
+    imageHeight: 200
+  },
+  favorites: {
+    articleClassName: 'favorites__card',
+    imageWrapperClassName: 'favorites__image-wrapper',
+    infoClassName: 'favorites__card-info',
+    imageWidth: 150,
+    imageHeight: 110
+  }
+} as const satisfies Record<NonNullable<OfferCardProps['variant']>, OfferCardVariant>;
 
 function OfferCard({
   id,
@@ -21,59 +43,44 @@ function OfferCard({
   isFavorite,
   isPremium,
   rating,
-  previewImage
+  previewImage,
+  variant = 'cities'
 }: OfferCardProps): ReactElement {
-  const [isInBookmarks, setIsInBookmarks] = useState(isFavorite);
+  const cardLayoutVariant: OfferCardVariant = OFFER_CARD_VARIANTS[variant];
 
   return (
-    <article className="cities__card place-card">
+    <article className={`place-card ${cardLayoutVariant.articleClassName}`}>
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`place-card__image-wrapper ${cardLayoutVariant.imageWrapperClassName}`}>
         <Link to={`${AppRoute.Offer}/${id}`}>
           <img
             className="place-card__image"
             src={previewImage}
-            width="260"
-            height="200"
+            width={cardLayoutVariant.imageWidth}
+            height={cardLayoutVariant.imageHeight}
             alt="Place image"
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`place-card__info ${cardLayoutVariant.infoClassName}`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button
-            className={classNames('place-card__bookmark-button', 'button', {
-              'place-card__bookmark-button--active': isInBookmarks
-            })}
-            type="button"
-            onClick={() => setIsInBookmarks((prevInBookmarks) => !prevInBookmarks)}
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">
-              {isInBookmarks ? 'In bookmarks' : 'To bookmarks'}
-            </span>
-          </button>
+          <OfferBookmarksButton isActive={isFavorite} />
         </div>
         <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: `${Math.round(rating) * 20}%` }} />
-            <span className="visually-hidden">Rating</span>
-          </div>
+          <OfferRatingStars rating={rating} />
         </div>
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{HOUSING_TYPE_TEXT[housingType]}</p>
+        <p className="place-card__type">{getOfferHousingTypeText(housingType)}</p>
       </div>
     </article>
   );

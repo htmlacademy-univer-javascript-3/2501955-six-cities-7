@@ -17,11 +17,20 @@ type AppProps = {
 };
 
 function App({ offers }: AppProps): ReactElement {
+  const favoriteOffers: OfferPreview[] = offers.filter((offer) => offer.isFavorite);
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<RootLayout authorizationStatus={AuthorizationStatus.NoAuth} />}>
+          <Route
+            element={
+              <RootLayout
+                authorizationStatus={AuthorizationStatus.NoAuth}
+                favoritesCount={favoriteOffers.length}
+              />
+            }
+          >
             <Route
               path={AppRoute.Root}
               element={<MainPage offers={offers} />}
@@ -44,7 +53,7 @@ function App({ offers }: AppProps): ReactElement {
                   restrictedFor={AuthorizationStatus.NoAuth}
                   redirectTo={AppRoute.Login}
                 >
-                  <FavoritesPage />
+                  <FavoritesPage offers={favoriteOffers} />
                 </ProtectedRoute>
               }
             />
