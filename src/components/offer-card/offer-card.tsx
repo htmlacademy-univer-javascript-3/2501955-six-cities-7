@@ -10,6 +10,8 @@ import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-butt
 type OfferCardProps = Omit<OfferPreview, 'city' | 'location'> & {
   authorizationStatus: AuthorizationStatus;
   variant?: 'cities' | 'favorites';
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 type OfferCardVariant = {
@@ -47,12 +49,18 @@ function OfferCard({
   rating,
   previewImage,
   authorizationStatus,
-  variant = 'cities'
+  variant = 'cities',
+  onMouseEnter,
+  onMouseLeave
 }: OfferCardProps): ReactElement {
   const cardLayoutVariant: OfferCardVariant = OFFER_CARD_VARIANTS[variant];
 
   return (
-    <article className={`place-card ${cardLayoutVariant.articleClassName}`}>
+    <article
+      className={`place-card ${cardLayoutVariant.articleClassName}`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>

@@ -9,6 +9,7 @@ type MainPageOffersListProps = {
   authorizationStatus: AuthorizationStatus;
   offers: OfferPreview[];
   offersCityName: CityName;
+  onOfferHover: (offerId: string | null) => void;
 };
 
 enum SortState {
@@ -18,7 +19,7 @@ enum SortState {
   TopRatedFirst = 'Top rated first'
 }
 
-function MainPageOffersList({ authorizationStatus, offers, offersCityName }: MainPageOffersListProps): ReactElement {
+function MainPageOffersList({ authorizationStatus, offers, offersCityName, onOfferHover }: MainPageOffersListProps): ReactElement {
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [activeSortState, setActiveSortState] = useState(SortState.Popular);
 
@@ -86,7 +87,13 @@ function MainPageOffersList({ authorizationStatus, offers, offersCityName }: Mai
       </form>
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((offer) => (
-          <OfferCard authorizationStatus={authorizationStatus} key={offer.id} {...offer} />
+          <OfferCard
+            authorizationStatus={authorizationStatus}
+            key={offer.id}
+            {...offer}
+            onMouseEnter={() => onOfferHover(offer.id)}
+            onMouseLeave={() => onOfferHover(null)}
+          />
         ))}
       </div>
     </section>

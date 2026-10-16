@@ -12,10 +12,16 @@ type MainPageProps = {
   offers: OfferPreview[];
 };
 
-function MainPage({ authorizationStatus, offers }: MainPageProps): ReactElement {
+function MainPage({
+  authorizationStatus,
+  offers,
+}: MainPageProps): ReactElement {
   const [activeTab, setActiveTab] = useState(MAIN_PAGE_TAB_LIST[0]);
-  const activeTabOffers: OfferPreview[] = offers.filter((offer) =>
-    offer.city.name === activeTab
+  /** @todo дополнить, потребуется в следующих задачах */
+  const [, setHoveredOfferId] = useState<string | null>(null);
+
+  const activeTabOffers: OfferPreview[] = offers.filter(
+    (offer) => offer.city.name === activeTab,
   );
   const isEmpty: boolean = !activeTabOffers.length;
 
@@ -38,7 +44,7 @@ function MainPage({ authorizationStatus, offers }: MainPageProps): ReactElement 
 
       <main
         className={classNames('page__main', 'page__main--index', {
-          'page__main--index-empty': isEmpty
+          'page__main--index-empty': isEmpty,
         })}
       >
         <h1 className="visually-hidden">Cities</h1>
@@ -46,14 +52,19 @@ function MainPage({ authorizationStatus, offers }: MainPageProps): ReactElement 
         <div className="cities">
           <div
             className={classNames('cities__places-container container', {
-              'cities__places-container--empty': isEmpty
+              'cities__places-container--empty': isEmpty,
             })}
           >
-            {
-              isEmpty
-                ? emptyStateLayout
-                : <MainPageOffersList authorizationStatus={authorizationStatus} offers={activeTabOffers} offersCityName={activeTab} />
-            }
+            {isEmpty ? (
+              emptyStateLayout
+            ) : (
+              <MainPageOffersList
+                authorizationStatus={authorizationStatus}
+                offers={activeTabOffers}
+                offersCityName={activeTab}
+                onOfferHover={setHoveredOfferId}
+              />
+            )}
             <div className="cities__right-section">
               {!isEmpty && <section className="cities__map map" />}
             </div>
