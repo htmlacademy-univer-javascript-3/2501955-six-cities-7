@@ -9,8 +9,8 @@ import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import ProtectedRoute from '../protected-route/protected-route';
-import RootLayout from '../root-layout/root-layout';
+import ProtectedRoute from './components/protected-route/protected-route';
+import RootLayout from './components/root-layout/root-layout';
 
 type AppProps = {
   offers: OfferPreview[];

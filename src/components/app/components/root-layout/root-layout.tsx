@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import type { ReactElement } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../enums/app-route';
-import type { AuthorizationStatus } from '../../enums/authorization-status';
-import { isAppRoute } from '../../utils/is-app-route';
+import { AppRoute } from '../../../../enums/app-route';
+import type { AuthorizationStatus } from '../../../../enums/authorization-status';
+import { isAppRoute } from '../../../../utils/is-app-route';
 import Header from './components/header/header';
 
 type RootLayoutProps = {

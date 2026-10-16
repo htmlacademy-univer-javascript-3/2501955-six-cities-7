@@ -1,8 +1,8 @@
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../../../enums/app-route';
-import { AuthorizationStatus } from '../../../../enums/authorization-status';
-import Logo from '../../../logo/logo';
+import { AppRoute } from '../../../../../../enums/app-route';
+import { AuthorizationStatus } from '../../../../../../enums/authorization-status';
+import Logo from '../../../../../logo/logo';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;

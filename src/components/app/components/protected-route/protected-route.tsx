@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AuthorizationStatus } from '../../enums/authorization-status';
-import type { AppRoute } from '../../enums/app-route';
+import { AuthorizationStatus } from '../../../../enums/authorization-status';
+import type { AppRoute } from '../../../../enums/app-route';
 
 type ProtectedRouteProps = {
   restrictedFor: AuthorizationStatus;
