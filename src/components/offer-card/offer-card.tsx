@@ -1,12 +1,14 @@
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
+import type { AuthorizationStatus } from '../../enums/authorization-status';
 import type { OfferPreview } from '../../types/offer-preview';
 import { getOfferHousingTypeText } from '../../utils/get-offer-housing-type-text';
 import OfferRatingStars from '../offer-rating-stars/offer-rating-stars';
 import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-button';
 
 type OfferCardProps = Omit<OfferPreview, 'city' | 'location'> & {
+  authorizationStatus: AuthorizationStatus;
   variant?: 'cities' | 'favorites';
 };
 
@@ -44,6 +46,7 @@ function OfferCard({
   isPremium,
   rating,
   previewImage,
+  authorizationStatus,
   variant = 'cities'
 }: OfferCardProps): ReactElement {
   const cardLayoutVariant: OfferCardVariant = OFFER_CARD_VARIANTS[variant];
@@ -72,7 +75,7 @@ function OfferCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <OfferBookmarksButton isActive={isFavorite} />
+          <OfferBookmarksButton authorizationStatus={authorizationStatus} isActive={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <OfferRatingStars rating={rating} />

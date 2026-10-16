@@ -1,10 +1,12 @@
+import classNames from 'classnames';
 import { type ReactElement, useState } from 'react';
+import type { AuthorizationStatus } from '../../../../enums/authorization-status';
 import type { CityName } from '../../../../enums/city-name';
 import type { OfferPreview } from '../../../../types/offer-preview';
 import OfferCard from '../../../../components/offer-card/offer-card';
-import classNames from 'classnames';
 
 type MainPageOffersListProps = {
+  authorizationStatus: AuthorizationStatus;
   offers: OfferPreview[];
   offersCityName: CityName;
 };
@@ -16,7 +18,7 @@ enum SortState {
   TopRatedFirst = 'Top rated first'
 }
 
-function MainPageOffersList({ offers, offersCityName }: MainPageOffersListProps): ReactElement {
+function MainPageOffersList({ authorizationStatus, offers, offersCityName }: MainPageOffersListProps): ReactElement {
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [activeSortState, setActiveSortState] = useState(SortState.Popular);
 
@@ -84,7 +86,7 @@ function MainPageOffersList({ offers, offersCityName }: MainPageOffersListProps)
       </form>
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((offer) => (
-          <OfferCard key={offer.id} {...offer} />
+          <OfferCard authorizationStatus={authorizationStatus} key={offer.id} {...offer} />
         ))}
       </div>
     </section>

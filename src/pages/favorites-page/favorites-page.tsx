@@ -1,18 +1,20 @@
 import classNames from 'classnames';
 import type { ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
+import type { AuthorizationStatus } from '../../enums/authorization-status';
 import type { CityName } from '../../enums/city-name';
 import type { OfferPreview } from '../../types/offer-preview';
 import Logo from '../../components/logo/logo';
 import OfferCard from '../../components/offer-card/offer-card';
 
 type FavoritesPageProps = {
+  authorizationStatus: AuthorizationStatus;
   offers: OfferPreview[];
 };
 
 type OffersByCity = Partial<Record<CityName, OfferPreview[]>>;
 
-function FavoritesPage({ offers }: FavoritesPageProps): ReactElement {
+function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): ReactElement {
   const isEmpty: boolean = !offers.length;
   const offersByCity: OffersByCity = offers.reduce<OffersByCity>(
     (result, offer) => {
@@ -71,6 +73,7 @@ function FavoritesPage({ offers }: FavoritesPageProps): ReactElement {
                       {cityOffers.map((offer) => (
                         <OfferCard
                           key={offer.id}
+                          authorizationStatus={authorizationStatus}
                           {...offer}
                           variant='favorites'
                         />

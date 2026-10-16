@@ -8,8 +8,13 @@ import OfferRatingStars from '../../components/offer-rating-stars/offer-rating-s
 import { AppRoute } from '../../enums/app-route';
 import OfferBookmarksButton from '../../components/offer-bookmarks-button/offer-bookmarks-button';
 import { getOfferHousingTypeText } from '../../utils/get-offer-housing-type-text';
+import { AuthorizationStatus } from '../../enums/authorization-status';
 
-function OfferPage(): ReactElement {
+type OfferPageProps = {
+  authorizationStatus: AuthorizationStatus;
+}
+
+function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
   const { id } = useParams();
   const offer: Offer | undefined = OFFERS.find((item) => item.id === id);
 
@@ -45,7 +50,11 @@ function OfferPage(): ReactElement {
                 <h1 className="offer__name">
                   { offer.title }
                 </h1>
-                <OfferBookmarksButton isActive={offer.isFavorite} isFullSize />
+                <OfferBookmarksButton
+                  authorizationStatus={authorizationStatus}
+                  isActive={offer.isFavorite}
+                  isFullSize
+                />
               </div>
               <div className="offer__rating rating">
                 <OfferRatingStars rating={offer.rating} variant='offer' />

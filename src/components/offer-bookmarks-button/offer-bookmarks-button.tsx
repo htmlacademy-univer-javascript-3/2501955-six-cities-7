@@ -1,7 +1,11 @@
 import classNames from 'classnames';
 import { useState, type ReactElement } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthorizationStatus } from '../../enums/authorization-status';
+import { AppRoute } from '../../enums/app-route';
 
 type OfferBookmarksButtonProps = {
+  authorizationStatus: AuthorizationStatus;
   isActive?: boolean;
   isFullSize?: boolean;
 };
@@ -20,30 +24,43 @@ const OFFER_BOOKMARKS_BUTTON_VARIANTS = {
     iconWidth: 18,
     iconHeight: 19,
     activeClassName: 'place-card__bookmark-button--active',
-    iconClassName: 'place-card__bookmark-icon'
+    iconClassName: 'place-card__bookmark-icon',
   },
   offer: {
     className: 'offer__bookmark-button',
     iconWidth: 31,
     iconHeight: 33,
     activeClassName: 'offer__bookmark-button--active',
-    iconClassName: 'offer__bookmark-icon'
+    iconClassName: 'offer__bookmark-icon',
   },
 } as const satisfies Record<'card' | 'offer', OfferBookmarksButtonVariant>;
 
-function OfferBookmarksButton({ isActive = false, isFullSize = false }: OfferBookmarksButtonProps): ReactElement {
+function OfferBookmarksButton({
+  authorizationStatus,
+  isActive = false,
+  isFullSize = false,
+}: OfferBookmarksButtonProps): ReactElement {
   const [isInBookmarks, setIsInBookmarks] = useState(isActive);
-  const variant: OfferBookmarksButtonVariant = OFFER_BOOKMARKS_BUTTON_VARIANTS[
-    isFullSize ? 'offer' : 'card'
-  ];
+  const variant: OfferBookmarksButtonVariant = OFFER_BOOKMARKS_BUTTON_VARIANTS[isFullSize ? 'offer' : 'card'];
+  const isAuthorized: boolean = authorizationStatus === AuthorizationStatus.Auth;
+  const navigate = useNavigate();
+  const toggleInBookmarksState = (): void => {
+    if (!isAuthorized) {
+      navigate(AppRoute.Login);
+
+      return;
+    }
+
+    setIsInBookmarks((prevInBookmarks) => !prevInBookmarks);
+  };
 
   return (
     <button
       className={classNames(variant.className, 'button', {
-        [variant.activeClassName]: isInBookmarks
+        [variant.activeClassName]: isInBookmarks,
       })}
       type="button"
-      onClick={() => setIsInBookmarks((prevInBookmarks) => !prevInBookmarks)}
+      onClick={toggleInBookmarksState}
     >
       <svg
         className={variant.iconClassName}

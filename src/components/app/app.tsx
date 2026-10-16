@@ -18,6 +18,7 @@ type AppProps = {
 
 function App({ offers }: AppProps): ReactElement {
   const favoriteOffers: OfferPreview[] = offers.filter((offer) => offer.isFavorite);
+  const currentAuthorizationStatus: AuthorizationStatus = AuthorizationStatus.NoAuth;
 
   return (
     <HelmetProvider>
@@ -26,14 +27,14 @@ function App({ offers }: AppProps): ReactElement {
           <Route
             element={
               <RootLayout
-                authorizationStatus={AuthorizationStatus.NoAuth}
+                authorizationStatus={currentAuthorizationStatus}
                 favoritesCount={favoriteOffers.length}
               />
             }
           >
             <Route
               path={AppRoute.Root}
-              element={<MainPage offers={offers} />}
+              element={<MainPage authorizationStatus={currentAuthorizationStatus} offers={offers} />}
             />
             <Route
               path={AppRoute.Login}
@@ -53,13 +54,13 @@ function App({ offers }: AppProps): ReactElement {
                   restrictedFor={AuthorizationStatus.NoAuth}
                   redirectTo={AppRoute.Login}
                 >
-                  <FavoritesPage offers={favoriteOffers} />
+                  <FavoritesPage authorizationStatus={currentAuthorizationStatus} offers={favoriteOffers} />
                 </ProtectedRoute>
               }
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<OfferPage />}
+              element={<OfferPage authorizationStatus={currentAuthorizationStatus} />}
             />
           </Route>
           <Route

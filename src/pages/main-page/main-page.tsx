@@ -1,16 +1,18 @@
 import classNames from 'classnames';
 import { useState, type ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
+import type { AuthorizationStatus } from '../../enums/authorization-status';
 import type { OfferPreview } from '../../types/offer-preview';
 import { MAIN_PAGE_TAB_LIST } from './constants/main-page-tab-list';
 import MainPageTabs from './components/main-page-tabs/main-page-tabs';
 import MainPageOffersList from './components/main-page-offers-list/main-page-offers-list';
 
 type MainPageProps = {
+  authorizationStatus: AuthorizationStatus;
   offers: OfferPreview[];
 };
 
-function MainPage({ offers }: MainPageProps): ReactElement {
+function MainPage({ authorizationStatus, offers }: MainPageProps): ReactElement {
   const [activeTab, setActiveTab] = useState(MAIN_PAGE_TAB_LIST[0]);
   const activeTabOffers: OfferPreview[] = offers.filter((offer) =>
     offer.city.name === activeTab
@@ -50,7 +52,7 @@ function MainPage({ offers }: MainPageProps): ReactElement {
             {
               isEmpty
                 ? emptyStateLayout
-                : <MainPageOffersList offers={activeTabOffers} offersCityName={activeTab} />
+                : <MainPageOffersList authorizationStatus={authorizationStatus} offers={activeTabOffers} offersCityName={activeTab} />
             }
             <div className="cities__right-section">
               {!isEmpty && <section className="cities__map map" />}
