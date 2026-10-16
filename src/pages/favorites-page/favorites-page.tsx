@@ -89,7 +89,7 @@ function FavoritesPage({ authorizationStatus, offers }: FavoritesPageProps): Rea
         </div>
       </main>
       <footer className={classNames('footer', { 'container': !isEmpty })}>
-        <Logo isHeader={false} />
+        <Logo withLink isFooterLogo />
       </footer>
     </>
   );

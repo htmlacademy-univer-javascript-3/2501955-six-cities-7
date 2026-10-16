@@ -51,7 +51,7 @@ function MainPage({
         <MainPageTabs activeTab={activeTab} onTabChange={setActiveTab} />
         <div className="cities">
           <div
-            className={classNames('cities__places-container container', {
+            className={classNames('cities__places-container', 'container', {
               'cities__places-container--empty': isEmpty,
             })}
           >

@@ -6,14 +6,16 @@ import Logo from '../../../logo/logo';
 
 type HeaderProps = {
   authorizationStatus: AuthorizationStatus;
+  favoritesCount: number;
   isMainPage: boolean;
   isLoginPage: boolean;
 };
 
 function Header({
   authorizationStatus,
+  favoritesCount,
   isMainPage,
-  isLoginPage
+  isLoginPage,
 }: HeaderProps): ReactElement {
   const isAuthorized: boolean = authorizationStatus === AuthorizationStatus.Auth;
 
@@ -22,7 +24,7 @@ function Header({
       <span className="header__user-name user__name">
         Oliver.conner@gmail.com
       </span>
-      <span className="header__favorite-count">3</span>
+      <span className="header__favorite-count">{favoritesCount}</span>
     </>
   ) : (
     <span className="header__login">Sign in</span>
@@ -60,7 +62,7 @@ function Header({
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">
-            <Logo withLink={isMainPage} />
+            <Logo withLink={!isMainPage} />
           </div>
           {navigation}
         </div>

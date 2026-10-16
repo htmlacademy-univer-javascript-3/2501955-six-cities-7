@@ -4,17 +4,17 @@ import { AppRoute } from '../../enums/app-route';
 
 type LogoProps = {
   withLink?: boolean;
-  isHeader?: boolean;
+  isFooterLogo?: boolean;
 };
 
-type LogoVariant = {
+type LogoLayoutVariant = {
   className: string;
   width: number;
   height: number;
   linkClassName: string;
 };
 
-const LOGO_VARIANTS = {
+const LOGO_LAYOUT_VARIANTS = {
   header: {
     className: 'header__logo',
     width: 81,
@@ -27,29 +27,29 @@ const LOGO_VARIANTS = {
     height: 33,
     linkClassName: 'footer__logo-link',
   },
-} as const satisfies Record<'header' | 'footer', LogoVariant>;
+} as const satisfies Record<'header' | 'footer', LogoLayoutVariant>;
 
 function Logo({
   withLink = false,
-  isHeader = true
+  isFooterLogo = false,
 }: LogoProps): ReactElement {
-  const variant: LogoVariant = LOGO_VARIANTS[isHeader ? 'header' : 'footer'];
+  const layoutVariant: LogoLayoutVariant = LOGO_LAYOUT_VARIANTS[isFooterLogo ? 'footer' : 'header'];
   const logoImage: ReactElement = (
     <img
-      className={variant.className}
+      className={layoutVariant.className}
       src="img/logo.svg"
       alt="6 cities logo"
-      width={variant.width}
-      height={variant.height}
+      width={layoutVariant.width}
+      height={layoutVariant.height}
     />
   );
 
   return withLink ? (
-    logoImage
-  ) : (
-    <Link className={variant.linkClassName} to={AppRoute.Root}>
+    <Link className={layoutVariant.linkClassName} to={AppRoute.Root}>
       {logoImage}
     </Link>
+  ) : (
+    logoImage
   );
 }
 

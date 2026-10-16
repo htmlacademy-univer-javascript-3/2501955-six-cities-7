@@ -31,7 +31,7 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
   return (
     <>
       <Helmet>
-        <title>6 cities | Offer</title>
+        <title>6 cities | {offer.title}</title>
       </Helmet>
 
       <main className="page__main page__main--offer">

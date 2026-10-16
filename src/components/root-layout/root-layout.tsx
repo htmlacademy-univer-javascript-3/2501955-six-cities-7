@@ -29,6 +29,7 @@ function RootLayout({ authorizationStatus, favoritesCount }: RootLayoutProps): R
     >
       <Header
         authorizationStatus={authorizationStatus}
+        favoritesCount={favoritesCount}
         isMainPage={isMainPage}
         isLoginPage={isLoginPage}
       />
