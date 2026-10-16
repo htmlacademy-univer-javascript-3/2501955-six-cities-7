@@ -33,7 +33,7 @@ function Header({
   const profileLink: ReactElement = (
     <Link
       className="header__nav-link header__nav-link--profile"
-      to={isAuthorized ? AppRoute.Root : AppRoute.Login}
+      to={isAuthorized ? AppRoute.Favorites : AppRoute.Login}
     >
       <div className="header__avatar-wrapper user__avatar-wrapper" />
       {userInfo}
