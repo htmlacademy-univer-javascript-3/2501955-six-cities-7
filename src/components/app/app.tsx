@@ -3,27 +3,43 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
 import { AuthorizationStatus } from '../../enums/authorization-status';
+import type { OfferPreview } from '../../types/offer-preview';
 import MainPage from '../../pages/main-page/main-page';
 import LoginPage from '../../pages/login-page/login-page';
 import FavoritesPage from '../../pages/favorites-page/favorites-page';
 import OfferPage from '../../pages/offer-page/offer-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
-import ProtectedRoute from '../protected-route/protected-route';
-import Header from '../header/header';
+import ProtectedRoute from './components/protected-route/protected-route';
+import RootLayout from './components/root-layout/root-layout';
 
 type AppProps = {
-  offersCount: number;
+  offers: OfferPreview[];
 };
 
-function App({ offersCount }: AppProps): ReactElement {
+function App({ offers }: AppProps): ReactElement {
+  const favoriteOffers: OfferPreview[] = offers.filter((offer) => offer.isFavorite);
+  const currentAuthorizationStatus: AuthorizationStatus = AuthorizationStatus.NoAuth;
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
-          <Route element={<Header authorizationStatus={AuthorizationStatus.NoAuth} />}>
+          <Route
+            element={
+              <RootLayout
+                authorizationStatus={currentAuthorizationStatus}
+                favoritesCount={favoriteOffers.length}
+              />
+            }
+          >
             <Route
               path={AppRoute.Root}
-              element={<MainPage offersCount={offersCount} />}
+              element={
+                <MainPage
+                  authorizationStatus={currentAuthorizationStatus}
+                  offers={offers}
+                />
+              }
             />
             <Route
               path={AppRoute.Login}
@@ -43,19 +59,21 @@ function App({ offersCount }: AppProps): ReactElement {
                   restrictedFor={AuthorizationStatus.NoAuth}
                   redirectTo={AppRoute.Login}
                 >
-                  <FavoritesPage />
+                  <FavoritesPage
+                    authorizationStatus={currentAuthorizationStatus}
+                    offers={favoriteOffers}
+                  />
                 </ProtectedRoute>
               }
             />
             <Route
               path={`${AppRoute.Offer}/:id`}
-              element={<OfferPage />}
+              element={
+                <OfferPage authorizationStatus={currentAuthorizationStatus} />
+              }
             />
           </Route>
-          <Route
-            path='*'
-            element={<NotFoundPage />}
-          />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>
