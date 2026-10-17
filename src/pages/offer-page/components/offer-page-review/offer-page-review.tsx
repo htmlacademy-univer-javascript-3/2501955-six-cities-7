@@ -6,12 +6,19 @@ type OfferPageReviewProps = {
   review: OfferReview;
 };
 
-function OfferPageReview({ review }: OfferPageReviewProps): ReactElement {
-  const formattedDate: string = new Intl.DateTimeFormat('en-US', {
+const REVIEW_DATE_FORMATTER: Intl.DateTimeFormat = new Intl.DateTimeFormat(
+  'en-US',
+  {
     month: 'long',
     year: 'numeric',
     timeZone: 'UTC',
-  }).format(new Date(review.date));
+  },
+);
+
+function OfferPageReview({ review }: OfferPageReviewProps): ReactElement {
+  const formattedDate: string = REVIEW_DATE_FORMATTER.format(
+    new Date(review.date)
+  );
 
   return (
     <li className="reviews__item">
