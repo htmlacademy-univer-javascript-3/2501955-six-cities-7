@@ -1,39 +1,118 @@
 import type { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../enums/app-route';
+import type { AuthorizationStatus } from '../../enums/authorization-status';
+import type { OfferPreview } from '../../types/offer-preview';
+import { capitalize } from '../../utils/capitalize';
+import OfferRatingStars from '../offer-rating-stars/offer-rating-stars';
+import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-button';
 
-function OfferCard(): ReactElement {
+type OfferCardProps = {
+  authorizationStatus: AuthorizationStatus;
+  offer: Omit<OfferPreview, 'city' | 'location'>;
+  layoutVariant?: 'cities' | 'favorites' | 'near-places';
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+};
+
+type CardLayoutVariant = {
+  articleClassName: string;
+  imageWrapperClassName: string;
+  infoClassName: string;
+  imageWidth: number;
+  imageHeight: number;
+};
+
+const CARD_LAYOUT_VARIANTS = {
+  cities: {
+    articleClassName: 'cities__card',
+    imageWrapperClassName: 'cities__image-wrapper',
+    infoClassName: '',
+    imageWidth: 260,
+    imageHeight: 200,
+  },
+  favorites: {
+    articleClassName: 'favorites__card',
+    imageWrapperClassName: 'favorites__image-wrapper',
+    infoClassName: 'favorites__card-info',
+    imageWidth: 150,
+    imageHeight: 110,
+  },
+  'near-places': {
+    articleClassName: 'near-places__card',
+    imageWrapperClassName: 'near-places__image-wrapper',
+    infoClassName: '',
+    imageWidth: 260,
+    imageHeight: 200,
+  },
+} as const satisfies Record<
+  NonNullable<OfferCardProps['layoutVariant']>,
+  CardLayoutVariant
+>;
+
+function OfferCard({
+  authorizationStatus,
+  offer,
+  layoutVariant = 'cities',
+  onMouseEnter,
+  onMouseLeave,
+}: OfferCardProps): ReactElement {
+  const cardLayoutVariant: CardLayoutVariant = CARD_LAYOUT_VARIANTS[layoutVariant];
+  const {
+    isPremium,
+    id,
+    previewImage,
+    price,
+    isFavorite,
+    rating,
+    title,
+    housingType,
+  } = offer;
+
   return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
+    <article
+      className={`place-card ${cardLayoutVariant.articleClassName}`}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
+      <div
+        className={`place-card__image-wrapper ${cardLayoutVariant.imageWrapperClassName}`}
+      >
+        <Link to={`${AppRoute.Offer}/${id}`}>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={cardLayoutVariant.imageWidth}
+            height={cardLayoutVariant.imageHeight}
+            alt="Place image"
+          />
+        </Link>
       </div>
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image" />
-        </a>
-      </div>
-      <div className="place-card__info">
+      <div className={`place-card__info ${cardLayoutVariant.infoClassName}`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <OfferBookmarksButton
+            authorizationStatus={authorizationStatus}
+            isActive={isFavorite}
+          />
         </div>
         <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
+          <OfferRatingStars rating={rating} />
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">
+          {capitalize(housingType)}
+        </p>
       </div>
     </article>
   );
