@@ -144,10 +144,17 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
           </div>
           <Map
             center={offer.city.location}
-            points={nearOffers.map((nearOffer) => ({
-              id: nearOffer.id,
-              ...nearOffer.location
-            }))}
+            points={[
+              {
+                id: offer.id,
+                ...offer.location
+              },
+              ...nearOffers.map((nearOffer) => ({
+                id: nearOffer.id,
+                ...nearOffer.location
+              }))
+            ]}
+            activePointId={offer.id}
             layoutVariant='offerPage'
           />
         </section>

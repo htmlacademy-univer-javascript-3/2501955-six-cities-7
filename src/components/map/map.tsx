@@ -14,7 +14,7 @@ type MapProps = {
   points: ReadonlyArray<OfferLocation & {
     id: string;
   }>;
-  activePointId?: string | null;
+  activePointId: string | null;
   layoutVariant?: MapLayoutVariantType;
 };
 
