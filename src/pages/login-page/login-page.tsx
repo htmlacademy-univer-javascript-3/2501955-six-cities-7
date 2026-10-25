@@ -1,9 +1,13 @@
-import type { ReactElement } from 'react';
+import { useState, type ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
+import type { CityName } from '../../enums/city-name';
+import { getRandomCity } from './utils/get-random-city';
 
 function LoginPage(): ReactElement {
+  const [city] = useState<CityName>(getRandomCity());
+
   return (
     <>
       <Helmet>
@@ -45,8 +49,11 @@ function LoginPage(): ReactElement {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Root}>
-                <span>Paris</span>
+              <Link
+                className="locations__item-link"
+                to={`${AppRoute.Root}?city=${encodeURIComponent(city)}`}
+              >
+                <span>{city}</span>
               </Link>
             </div>
           </section>

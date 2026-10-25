@@ -23,7 +23,7 @@ function FavoritesPageLocationItem({
         <div className="locations__item">
           <Link
             className="locations__item-link"
-            to={AppRoute.Root}
+            to={`${AppRoute.Root}?city=${encodeURIComponent(cityName)}`}
           >
             <span>{cityName}</span>
           </Link>
