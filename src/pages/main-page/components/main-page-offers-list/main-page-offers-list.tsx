@@ -1,4 +1,4 @@
-import { type ReactElement, useState } from 'react';
+import { type ReactElement, useMemo, useState } from 'react';
 import type { AuthorizationStatus } from '../../../../enums/authorization-status';
 import type { CityName } from '../../../../enums/city-name';
 import type { OfferPreview } from '../../../../types/offer-preview';
@@ -22,18 +22,24 @@ function MainPageOffersList({
 }: MainPageOffersListProps): ReactElement {
   const [activeSortState, setActiveSortState] = useState(OffersListSortState.Popular);
 
-  const sortedOffers: OfferPreview[] = [...offers].sort((a, b) => {
-    switch (activeSortState) {
-      case OffersListSortState.Popular:
-        return 0;
-      case OffersListSortState.PriceLowToHigh:
-        return a.price - b.price;
-      case OffersListSortState.PriceHighToLow:
-        return b.price - a.price;
-      case OffersListSortState.TopRatedFirst:
-        return b.rating - a.rating;
+  const sortedOffers: OfferPreview[] = useMemo(() => {
+    if (activeSortState === OffersListSortState.Popular) {
+      return offers;
     }
-  });
+
+    return [...offers].sort((a, b) => {
+      switch (activeSortState) {
+        case OffersListSortState.PriceLowToHigh:
+          return a.price - b.price;
+        case OffersListSortState.PriceHighToLow:
+          return b.price - a.price;
+        case OffersListSortState.TopRatedFirst:
+          return b.rating - a.rating;
+        default:
+          return 0;
+      }
+    });
+  }, [activeSortState, offers]);
 
   return (
     <section className="cities__places places">

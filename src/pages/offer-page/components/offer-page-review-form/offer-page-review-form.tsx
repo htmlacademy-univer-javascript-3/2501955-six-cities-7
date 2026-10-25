@@ -98,9 +98,9 @@ function OfferPageReviewForm(): ReactElement {
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set{' '}
+          To submit review please make sure to set&nbsp;
           <span className="reviews__star">rating</span> and describe your stay
-          between{' '}
+          between&nbsp;
           <b className="reviews__text-amount">
             {OFFER_REVIEW_MIN_COMMENT_LENGTH} and {OFFER_REVIEW_MAX_COMMENT_LENGTH} characters
           </b>

@@ -25,11 +25,8 @@ function FavoritesPage({
   const offersByCity: OffersByCity = offers.reduce<OffersByCity>(
     (result, offer) => {
       const cityName: CityName = offer.city.name;
-      if (!result[cityName]) {
-        result[cityName] = [];
-      }
 
-      result[cityName]?.push(offer);
+      (result[cityName] ??= []).push(offer);
 
       return result;
     },
