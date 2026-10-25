@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { type ReactElement, useState } from 'react';
 import type { AuthorizationStatus } from '../../../../enums/authorization-status';
 import type { CityName } from '../../../../enums/city-name';
@@ -6,6 +5,7 @@ import type { OfferPreview } from '../../../../types/offer-preview';
 import { addPluralEnding } from '../../../../utils/add-plural-ending';
 import { OffersListSortState } from './enums/offers-list-sort-state';
 import OfferCard from '../../../../components/offer-card/offer-card';
+import OffersListSort from './components/offers-list-sort/offers-list-sort';
 
 type MainPageOffersListProps = {
   authorizationStatus: AuthorizationStatus;
@@ -20,7 +20,6 @@ function MainPageOffersList({
   offersCityName,
   onOfferHover,
 }: MainPageOffersListProps): ReactElement {
-  const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
   const [activeSortState, setActiveSortState] = useState(OffersListSortState.Popular);
 
   const sortedOffers: OfferPreview[] = [...offers].sort((a, b) => {
@@ -36,54 +35,16 @@ function MainPageOffersList({
     }
   });
 
-  const selectSortState = (sortState: OffersListSortState): void => {
-    if (sortState !== activeSortState) {
-      setActiveSortState(sortState);
-    }
-    setIsSortDropdownOpen(false);
-  };
-
-  const sortStateDropdown: ReactElement = (
-    <ul
-      className={classNames('places__options', 'places__options--custom', {
-        'places__options--opened': isSortDropdownOpen,
-      })}
-    >
-      {Object.values(OffersListSortState).map((sortState) => (
-        <li
-          className={classNames('places__option', {
-            'places__option--active': sortState === activeSortState,
-          })}
-          key={sortState}
-          tabIndex={0}
-          onClick={() => selectSortState(sortState)}
-        >
-          {sortState}
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">
         {`${offers.length} place${addPluralEnding(offers.length)} to stay in ${offersCityName}`}
       </b>
-      <form className="places__sorting" action="#" method="get">
-        <span className="places__sorting-caption">Sort by</span>
-        <span
-          className="places__sorting-type"
-          tabIndex={0}
-          onClick={() => setIsSortDropdownOpen((prevIsSortDropdownOpen) => !prevIsSortDropdownOpen)}
-        >
-          {activeSortState}
-          <svg className="places__sorting-arrow" width="7" height="4">
-            <use xlinkHref="#icon-arrow-select" />
-          </svg>
-        </span>
-        {sortStateDropdown}
-      </form>
+      <OffersListSort
+        activeSortState={activeSortState}
+        onSortStateChange={setActiveSortState}
+      />
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((offer) => (
           <OfferCard

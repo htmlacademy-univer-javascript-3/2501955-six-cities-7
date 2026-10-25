@@ -8,6 +8,7 @@ import type { CityName } from '../../enums/city-name';
 import type { OfferPreview } from '../../types/offer-preview';
 import Logo from '../../components/logo/logo';
 import OfferCard from '../../components/offer-card/offer-card';
+import FavoritesPageEmptyState from './components/favorites-page-empty-state.tsx/favorites-page-empty-state';
 
 type OffersByCity = Partial<Record<CityName, OfferPreview[]>>;
 
@@ -35,18 +36,6 @@ function FavoritesPage({
     {},
   );
 
-  const emptyStateLayout: ReactElement = (
-    <section className="favorites favorites--empty">
-      <h1 className="visually-hidden">Favorites (empty)</h1>
-      <div className="favorites__status-wrapper">
-        <b className="favorites__status">Nothing yet saved.</b>
-        <p className="favorites__status-description">
-          Save properties to narrow down search or plan your future trips.
-        </p>
-      </div>
-    </section>
-  );
-
   return (
     <>
       <Helmet>
@@ -60,7 +49,7 @@ function FavoritesPage({
       >
         <div className="page__favorites-container container">
           {isEmpty ? (
-            emptyStateLayout
+            <FavoritesPageEmptyState />
           ) : (
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
