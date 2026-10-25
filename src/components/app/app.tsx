@@ -45,6 +45,7 @@ function App({ offers }: AppProps): ReactElement {
               path={AppRoute.Login}
               element={
                 <ProtectedRoute
+                  authorizationStatus={currentAuthorizationStatus}
                   restrictedFor={AuthorizationStatus.Auth}
                   redirectTo={AppRoute.Root}
                 >
@@ -56,6 +57,7 @@ function App({ offers }: AppProps): ReactElement {
               path={AppRoute.Favorites}
               element={
                 <ProtectedRoute
+                  authorizationStatus={currentAuthorizationStatus}
                   restrictedFor={AuthorizationStatus.NoAuth}
                   redirectTo={AppRoute.Login}
                 >
