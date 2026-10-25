@@ -4,6 +4,7 @@ import type { AuthorizationStatus } from '../../../../enums/authorization-status
 import type { CityName } from '../../../../enums/city-name';
 import type { OfferPreview } from '../../../../types/offer-preview';
 import { addPluralEnding } from '../../../../utils/add-plural-ending';
+import { OffersListSortState } from './enums/offers-list-sort-state';
 import OfferCard from '../../../../components/offer-card/offer-card';
 
 type MainPageOffersListProps = {
@@ -13,13 +14,6 @@ type MainPageOffersListProps = {
   onOfferHover: (offerId: string | null) => void;
 };
 
-enum SortState {
-  Popular = 'Popular',
-  PriceLowToHigh = 'Price: low to high',
-  PriceHighToLow = 'Price: high to low',
-  TopRatedFirst = 'Top rated first',
-}
-
 function MainPageOffersList({
   authorizationStatus,
   offers,
@@ -27,22 +21,22 @@ function MainPageOffersList({
   onOfferHover,
 }: MainPageOffersListProps): ReactElement {
   const [isSortDropdownOpen, setIsSortDropdownOpen] = useState(false);
-  const [activeSortState, setActiveSortState] = useState(SortState.Popular);
+  const [activeSortState, setActiveSortState] = useState(OffersListSortState.Popular);
 
   const sortedOffers: OfferPreview[] = [...offers].sort((a, b) => {
     switch (activeSortState) {
-      case SortState.Popular:
+      case OffersListSortState.Popular:
         return 0;
-      case SortState.PriceLowToHigh:
+      case OffersListSortState.PriceLowToHigh:
         return a.price - b.price;
-      case SortState.PriceHighToLow:
+      case OffersListSortState.PriceHighToLow:
         return b.price - a.price;
-      case SortState.TopRatedFirst:
+      case OffersListSortState.TopRatedFirst:
         return b.rating - a.rating;
     }
   });
 
-  const selectSortState = (sortState: SortState): void => {
+  const selectSortState = (sortState: OffersListSortState): void => {
     if (sortState !== activeSortState) {
       setActiveSortState(sortState);
     }
@@ -55,7 +49,7 @@ function MainPageOffersList({
         'places__options--opened': isSortDropdownOpen,
       })}
     >
-      {Object.values(SortState).map((sortState) => (
+      {Object.values(OffersListSortState).map((sortState) => (
         <li
           className={classNames('places__option', {
             'places__option--active': sortState === activeSortState,

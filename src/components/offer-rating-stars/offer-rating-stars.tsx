@@ -1,34 +1,18 @@
 import type { ReactElement } from 'react';
+import { OFFER_RATING_STARS_LAYOUT_VARIANTS } from './constants/offer-rating-stars-layout-variants';
+import type { OfferRatingStarsLayoutVariantType } from './types/offer-rating-stars-layout-variant-type';
+import type { OfferRatingStarsLayoutVariant } from './types/offer-rating-stars-layout-variant';
 
 type OfferRatingStarsProps = {
   rating: number;
-  layoutVariant?: 'offer' | 'card' | 'reviews';
+  layoutVariant?: OfferRatingStarsLayoutVariantType;
 };
-
-type StarsLayoutVariant = {
-  className: string;
-};
-
-const STARS_LAYOUT_VARIANTS = {
-  offer: {
-    className: 'offer__stars',
-  },
-  card: {
-    className: 'place-card__stars',
-  },
-  reviews: {
-    className: 'reviews__stars',
-  },
-} as const satisfies Record<
-  NonNullable<OfferRatingStarsProps['layoutVariant']>,
-  StarsLayoutVariant
->;
 
 function OfferRatingStars({
   rating,
   layoutVariant = 'card',
 }: OfferRatingStarsProps): ReactElement {
-  const starsLayoutVariant: StarsLayoutVariant = STARS_LAYOUT_VARIANTS[layoutVariant];
+  const starsLayoutVariant: OfferRatingStarsLayoutVariant = OFFER_RATING_STARS_LAYOUT_VARIANTS[layoutVariant];
 
   return (
     <div className={`rating__stars ${starsLayoutVariant.className}`}>
