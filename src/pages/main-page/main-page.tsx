@@ -2,8 +2,10 @@ import classNames from 'classnames';
 import { useState, type ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { AuthorizationStatus } from '../../enums/authorization-status';
+import type { OfferLocation } from '../../types/offer-location';
 import type { OfferPreview } from '../../types/offer-preview';
 import { MAIN_PAGE_TAB_LIST } from './constants/main-page-tab-list';
+import Map from '../../components/map/map';
 import MainPageEmptyState from './components/main-page-empty-state/main-page-empty-state';
 import MainPageOffersList from './components/main-page-offers-list/main-page-offers-list';
 import MainPageTabs from './components/main-page-tabs/main-page-tabs';
@@ -18,12 +20,12 @@ function MainPage({
   offers,
 }: MainPageProps): ReactElement {
   const [activeTab, setActiveTab] = useState(MAIN_PAGE_TAB_LIST[0]);
-  /** @todo дополнить, потребуется в следующих задачах */
-  const [, setHoveredOfferId] = useState<string | null>(null);
+  const [hoveredOfferId, setHoveredOfferId] = useState<string | null>(null);
 
   const activeTabOffers: OfferPreview[] = offers.filter(
     (offer) => offer.city.name === activeTab,
   );
+  const activeTabCityLocation: OfferLocation | undefined = activeTabOffers[0]?.city.location;
   const isEmpty: boolean = !activeTabOffers.length;
 
   return (
@@ -56,7 +58,16 @@ function MainPage({
               />
             )}
             <div className="cities__right-section">
-              {!isEmpty && <section className="cities__map map" />}
+              {!isEmpty && (
+                <Map
+                  center={activeTabCityLocation}
+                  points={activeTabOffers.map((offer) => ({
+                    id: offer.id,
+                    ...offer.location
+                  }))}
+                  activePointId={hoveredOfferId}
+                />
+              )}
             </div>
           </div>
         </div>
