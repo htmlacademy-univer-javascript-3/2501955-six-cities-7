@@ -2,8 +2,11 @@ import leaflet, { type Map as LeafletMap, type Marker as LeafletMarker } from 'l
 import 'leaflet/dist/leaflet.css';
 import { type ReactElement, useEffect, useRef, type MutableRefObject } from 'react';
 import type { OfferLocation } from '../../types/offer-location';
+import { MAP_LAYOUT_VARIANTS } from './constants/map-layout-variants';
 import { MAP_ACTIVE_MARKER } from './constants/map-active-marker';
 import { MAP_DEFAULT_MARKER } from './constants/map-default-marker';
+import type { MapLayoutVariant } from './types/map-layout-variant';
+import type { MapLayoutVariantType } from './types/map-layout-variant-type';
 import { useMap } from './hooks/use-map';
 
 type MapProps = {
@@ -12,11 +15,13 @@ type MapProps = {
     id: string;
   }>;
   activePointId?: string | null;
+  layoutVariant?: MapLayoutVariantType;
 };
 
-function Map({ center, points, activePointId }: MapProps): ReactElement {
+function Map({ center, points, activePointId, layoutVariant = 'mainPage' }: MapProps): ReactElement {
   const mapRef: MutableRefObject<HTMLElement | null> = useRef<HTMLElement | null>(null);
   const map: LeafletMap | null = useMap(mapRef, center);
+  const mapLayoutVariant: MapLayoutVariant = MAP_LAYOUT_VARIANTS[layoutVariant];
 
   useEffect(() => {
     if (!map) {
@@ -43,7 +48,7 @@ function Map({ center, points, activePointId }: MapProps): ReactElement {
 
   return (
     <section
-      className='map cities__map'
+      className={`map ${mapLayoutVariant.className}`}
       ref={mapRef}
     />
   );
