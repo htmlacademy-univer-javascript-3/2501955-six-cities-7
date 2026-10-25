@@ -6,7 +6,7 @@ import type { CityName } from '../../enums/city-name';
 import { getRandomCity } from './utils/get-random-city';
 
 function LoginPage(): ReactElement {
-  const [city] = useState<CityName>(getRandomCity());
+  const [city] = useState<CityName>(() => getRandomCity());
 
   return (
     <>
