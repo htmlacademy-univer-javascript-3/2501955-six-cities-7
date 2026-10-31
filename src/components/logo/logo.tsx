@@ -1,33 +1,13 @@
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../enums/app-route';
+import { LOGO_LAYOUT_VARIANTS } from './constants/logo-layout-variants';
+import type { LogoLayoutVariant } from './types/logo-layout-variant';
 
 type LogoProps = {
   withLink?: boolean;
   isFooterLogo?: boolean;
 };
-
-type LogoLayoutVariant = {
-  className: string;
-  width: number;
-  height: number;
-  linkClassName: string;
-};
-
-const LOGO_LAYOUT_VARIANTS = {
-  header: {
-    className: 'header__logo',
-    width: 81,
-    height: 41,
-    linkClassName: 'header__logo-link header__logo-link--active',
-  },
-  footer: {
-    className: 'footer__logo',
-    width: 64,
-    height: 33,
-    linkClassName: 'footer__logo-link',
-  },
-} as const satisfies Record<'header' | 'footer', LogoLayoutVariant>;
 
 function Logo({
   withLink = false,

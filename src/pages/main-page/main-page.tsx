@@ -2,10 +2,13 @@ import classNames from 'classnames';
 import { useState, type ReactElement } from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { AuthorizationStatus } from '../../enums/authorization-status';
+import type { OfferLocation } from '../../types/offer-location';
 import type { OfferPreview } from '../../types/offer-preview';
 import { MAIN_PAGE_TAB_LIST } from './constants/main-page-tab-list';
-import MainPageTabs from './components/main-page-tabs/main-page-tabs';
+import Map from '../../components/map/map';
+import MainPageEmptyState from './components/main-page-empty-state/main-page-empty-state';
 import MainPageOffersList from './components/main-page-offers-list/main-page-offers-list';
+import MainPageTabs from './components/main-page-tabs/main-page-tabs';
 
 type MainPageProps = {
   authorizationStatus: AuthorizationStatus;
@@ -17,24 +20,13 @@ function MainPage({
   offers,
 }: MainPageProps): ReactElement {
   const [activeTab, setActiveTab] = useState(MAIN_PAGE_TAB_LIST[0]);
-  /** @todo дополнить, потребуется в следующих задачах */
-  const [, setHoveredOfferId] = useState<string | null>(null);
+  const [hoveredOfferId, setHoveredOfferId] = useState<string | null>(null);
 
   const activeTabOffers: OfferPreview[] = offers.filter(
     (offer) => offer.city.name === activeTab,
   );
+  const activeTabCityLocation: OfferLocation | undefined = activeTabOffers[0]?.city.location;
   const isEmpty: boolean = !activeTabOffers.length;
-
-  const emptyStateLayout: ReactElement = (
-    <section className="cities__no-places">
-      <div className="cities__status-wrapper tabs__content">
-        <b className="cities__status">No places to stay available</b>
-        <p className="cities__status-description">
-          {`We could not find any property available at the moment in ${activeTab}`}
-        </p>
-      </div>
-    </section>
-  );
 
   return (
     <>
@@ -56,7 +48,7 @@ function MainPage({
             })}
           >
             {isEmpty ? (
-              emptyStateLayout
+              <MainPageEmptyState currentCity={activeTab} />
             ) : (
               <MainPageOffersList
                 authorizationStatus={authorizationStatus}
@@ -66,7 +58,16 @@ function MainPage({
               />
             )}
             <div className="cities__right-section">
-              {!isEmpty && <section className="cities__map map" />}
+              {!isEmpty && (
+                <Map
+                  center={activeTabCityLocation}
+                  points={activeTabOffers.map((offer) => ({
+                    id: offer.id,
+                    ...offer.location
+                  }))}
+                  activePointId={hoveredOfferId}
+                />
+              )}
             </div>
           </div>
         </div>

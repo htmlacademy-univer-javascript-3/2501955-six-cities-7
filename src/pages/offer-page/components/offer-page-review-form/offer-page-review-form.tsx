@@ -5,38 +5,21 @@ import {
   type ChangeEvent,
   type FormEvent,
 } from 'react';
-
-type ReviewFormData = {
-  rating: number | null;
-  comment: string;
-};
-
-const INITIAL_FORM_DATA: ReviewFormData = {
-  rating: null,
-  comment: '',
-};
-
-const MIN_COMMENT_LENGTH = 50;
-const MAX_COMMENT_LENGTH = 300;
-
-const CONTROL_MODELS = [
-  { title: 'perfect', value: 5 },
-  { title: 'good', value: 4 },
-  { title: 'not bad', value: 3 },
-  { title: 'badly', value: 2 },
-  { title: 'terribly', value: 1 },
-] as const;
+import { OFFER_REVIEW_MAX_COMMENT_LENGTH, OFFER_REVIEW_MIN_COMMENT_LENGTH } from './constants/offer-review-comment-length';
+import { OFFER_REVIEW_FORM_CONTROL_MODELS } from './constants/offer-review-form-control-models';
+import { OFFER_REVIEW_FORM_INITIAL_DATA } from './constants/offer-review-form-initial-data';
+import type { OfferReviewFormData } from './types/offer-review-form-data';
 
 function OfferPageReviewForm(): ReactElement {
-  const [formData, setFormData] = useState<ReviewFormData>(INITIAL_FORM_DATA);
+  const [formData, setFormData] = useState<OfferReviewFormData>(OFFER_REVIEW_FORM_INITIAL_DATA);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   const commentLength: number = formData.comment.trim().length;
   const isSubmitDisabled: boolean =
     formData.rating === null ||
-    commentLength < MIN_COMMENT_LENGTH ||
-    commentLength > MAX_COMMENT_LENGTH ||
+    commentLength < OFFER_REVIEW_MIN_COMMENT_LENGTH ||
+    commentLength > OFFER_REVIEW_MAX_COMMENT_LENGTH ||
     isSubmitting;
 
   const handleRatingChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -64,7 +47,7 @@ function OfferPageReviewForm(): ReactElement {
 
     try {
       /** @todo реализовать отправку данных формы в следующих заданиях */
-      setFormData(INITIAL_FORM_DATA);
+      setFormData(OFFER_REVIEW_FORM_INITIAL_DATA);
     } catch {
       setSubmitError('Failed to submit a review. Try again');
     } finally {
@@ -78,7 +61,7 @@ function OfferPageReviewForm(): ReactElement {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {CONTROL_MODELS.map(({ title, value }) => (
+        {OFFER_REVIEW_FORM_CONTROL_MODELS.map(({ title, value }) => (
           <Fragment key={value}>
             <input
               className="form__rating-input visually-hidden"
@@ -110,16 +93,16 @@ function OfferPageReviewForm(): ReactElement {
         value={formData.comment}
         disabled={isSubmitting}
         onChange={handleCommentChange}
-        minLength={MIN_COMMENT_LENGTH}
-        maxLength={MAX_COMMENT_LENGTH}
+        minLength={OFFER_REVIEW_MIN_COMMENT_LENGTH}
+        maxLength={OFFER_REVIEW_MAX_COMMENT_LENGTH}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-          To submit review please make sure to set{' '}
+          To submit review please make sure to set&nbsp;
           <span className="reviews__star">rating</span> and describe your stay
-          between{' '}
+          between&nbsp;
           <b className="reviews__text-amount">
-            {MIN_COMMENT_LENGTH} and {MAX_COMMENT_LENGTH} characters
+            {OFFER_REVIEW_MIN_COMMENT_LENGTH} and {OFFER_REVIEW_MAX_COMMENT_LENGTH} characters
           </b>
           .
         </p>

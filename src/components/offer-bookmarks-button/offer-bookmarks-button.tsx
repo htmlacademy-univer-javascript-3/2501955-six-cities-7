@@ -3,6 +3,8 @@ import { useState, type ReactElement } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthorizationStatus } from '../../enums/authorization-status';
 import { AppRoute } from '../../enums/app-route';
+import { OFFER_BOOKMARKS_BUTTON_LAYOUT_VARIANTS } from './constants/offer-bookmarks-button-layout-variants';
+import type { OfferBookmarksButtonLayoutVariant } from './types/offer-bookmarks-button-layout-variant';
 
 type OfferBookmarksButtonProps = {
   authorizationStatus: AuthorizationStatus;
@@ -10,38 +12,13 @@ type OfferBookmarksButtonProps = {
   isFullSize?: boolean;
 };
 
-type ButtonLayoutVariant = {
-  className: string;
-  iconWidth: number;
-  iconHeight: number;
-  activeClassName: string;
-  iconClassName: string;
-};
-
-const BUTTON_LAYOUT_VARIANTS = {
-  card: {
-    className: 'place-card__bookmark-button',
-    iconWidth: 18,
-    iconHeight: 19,
-    activeClassName: 'place-card__bookmark-button--active',
-    iconClassName: 'place-card__bookmark-icon',
-  },
-  offer: {
-    className: 'offer__bookmark-button',
-    iconWidth: 31,
-    iconHeight: 33,
-    activeClassName: 'offer__bookmark-button--active',
-    iconClassName: 'offer__bookmark-icon',
-  },
-} as const satisfies Record<'card' | 'offer', ButtonLayoutVariant>;
-
 function OfferBookmarksButton({
   authorizationStatus,
   isActive = false,
   isFullSize = false,
 }: OfferBookmarksButtonProps): ReactElement {
   const [isInBookmarks, setIsInBookmarks] = useState(isActive);
-  const layoutVariant: ButtonLayoutVariant = BUTTON_LAYOUT_VARIANTS[isFullSize ? 'offer' : 'card'];
+  const layoutVariant: OfferBookmarksButtonLayoutVariant = OFFER_BOOKMARKS_BUTTON_LAYOUT_VARIANTS[isFullSize ? 'offer' : 'card'];
   const isAuthorized: boolean = authorizationStatus === AuthorizationStatus.Auth;
   const navigate = useNavigate();
   const toggleInBookmarksState = (): void => {

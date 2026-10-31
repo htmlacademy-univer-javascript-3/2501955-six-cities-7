@@ -4,51 +4,19 @@ import { AppRoute } from '../../enums/app-route';
 import type { AuthorizationStatus } from '../../enums/authorization-status';
 import type { OfferPreview } from '../../types/offer-preview';
 import { capitalize } from '../../utils/capitalize';
+import { OFFER_CARD_LAYOUT_VARIANTS } from './constants/offer-card-layout-variants';
+import type { OfferCardLayoutVariant } from './types/offer-card-layout-variant';
+import type { OfferCardLayoutVariantType } from './types/offer-card-layout-variant-type';
 import OfferRatingStars from '../offer-rating-stars/offer-rating-stars';
 import OfferBookmarksButton from '../offer-bookmarks-button/offer-bookmarks-button';
 
 type OfferCardProps = {
   authorizationStatus: AuthorizationStatus;
   offer: Omit<OfferPreview, 'city' | 'location'>;
-  layoutVariant?: 'cities' | 'favorites' | 'near-places';
+  layoutVariant?: OfferCardLayoutVariantType;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 };
-
-type CardLayoutVariant = {
-  articleClassName: string;
-  imageWrapperClassName: string;
-  infoClassName: string;
-  imageWidth: number;
-  imageHeight: number;
-};
-
-const CARD_LAYOUT_VARIANTS = {
-  cities: {
-    articleClassName: 'cities__card',
-    imageWrapperClassName: 'cities__image-wrapper',
-    infoClassName: '',
-    imageWidth: 260,
-    imageHeight: 200,
-  },
-  favorites: {
-    articleClassName: 'favorites__card',
-    imageWrapperClassName: 'favorites__image-wrapper',
-    infoClassName: 'favorites__card-info',
-    imageWidth: 150,
-    imageHeight: 110,
-  },
-  'near-places': {
-    articleClassName: 'near-places__card',
-    imageWrapperClassName: 'near-places__image-wrapper',
-    infoClassName: '',
-    imageWidth: 260,
-    imageHeight: 200,
-  },
-} as const satisfies Record<
-  NonNullable<OfferCardProps['layoutVariant']>,
-  CardLayoutVariant
->;
 
 function OfferCard({
   authorizationStatus,
@@ -57,7 +25,7 @@ function OfferCard({
   onMouseEnter,
   onMouseLeave,
 }: OfferCardProps): ReactElement {
-  const cardLayoutVariant: CardLayoutVariant = CARD_LAYOUT_VARIANTS[layoutVariant];
+  const cardLayoutVariant: OfferCardLayoutVariant = OFFER_CARD_LAYOUT_VARIANTS[layoutVariant];
   const {
     isPremium,
     id,

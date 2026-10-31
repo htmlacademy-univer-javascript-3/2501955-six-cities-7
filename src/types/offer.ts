@@ -9,7 +9,6 @@ export type Offer = {
   price: number;
   city: OfferCity;
   location: OfferLocation;
-  isFavorite?: boolean;
   isPremium: boolean;
   rating: number;
   description: string;
@@ -18,4 +17,5 @@ export type Offer = {
   author: OfferAuthor;
   images: string[];
   guestsMaxCount: number;
+  isFavorite?: boolean;
 };

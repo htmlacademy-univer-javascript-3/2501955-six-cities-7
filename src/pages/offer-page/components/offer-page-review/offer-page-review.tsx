@@ -1,22 +1,14 @@
 import type { ReactElement } from 'react';
 import type { OfferReview } from '../../../../types/offer-review';
+import { OFFER_REVIEW_DATE_FORMATTER } from './constants/offer-review-date-formatter';
 import OfferRatingStars from '../../../../components/offer-rating-stars/offer-rating-stars';
 
 type OfferPageReviewProps = {
   review: OfferReview;
 };
 
-const REVIEW_DATE_FORMATTER: Intl.DateTimeFormat = new Intl.DateTimeFormat(
-  'en-US',
-  {
-    month: 'long',
-    year: 'numeric',
-    timeZone: 'UTC',
-  },
-);
-
 function OfferPageReview({ review }: OfferPageReviewProps): ReactElement {
-  const formattedDate: string = REVIEW_DATE_FORMATTER.format(
+  const formattedDate: string = OFFER_REVIEW_DATE_FORMATTER.format(
     new Date(review.date)
   );
 
