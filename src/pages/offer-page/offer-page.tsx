@@ -12,6 +12,7 @@ import type { OfferPreview } from '../../types/offer-preview';
 import type { OfferReview } from '../../types/offer-review';
 import { addPluralEnding } from '../../utils/add-plural-ending';
 import { capitalize } from '../../utils/capitalize';
+import Map from '../../components/map/map';
 import OfferBookmarksButton from '../../components/offer-bookmarks-button/offer-bookmarks-button';
 import OfferRatingStars from '../../components/offer-rating-stars/offer-rating-stars';
 import OfferCard from '../../components/offer-card/offer-card';
@@ -141,7 +142,21 @@ function OfferPage({ authorizationStatus }: OfferPageProps): ReactElement {
               </section>
             </div>
           </div>
-          <section className="offer__map map" />
+          <Map
+            center={offer.city.location}
+            points={[
+              {
+                id: offer.id,
+                ...offer.location
+              },
+              ...nearOffers.map((nearOffer) => ({
+                id: nearOffer.id,
+                ...nearOffer.location
+              }))
+            ]}
+            activePointId={offer.id}
+            layoutVariant='offerPage'
+          />
         </section>
         <div className="container">
           <section className="near-places places">

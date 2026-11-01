@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import type { ReactElement } from 'react';
-import type { CityName } from '../../../../enums/city-name';
-import { MAIN_PAGE_TAB_LIST } from '../../constants/main-page-tab-list';
+import { CityName } from '../../../../enums/city-name';
 
 type MainPageTabsProps = {
   activeTab: CityName;
@@ -16,7 +15,7 @@ function MainPageTabs({
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {MAIN_PAGE_TAB_LIST.map((tab) => (
+          {Object.values(CityName).map((tab) => (
             <li className="locations__item" key={tab}>
               <a
                 className={classNames('locations__item-link', 'tabs__item', {
